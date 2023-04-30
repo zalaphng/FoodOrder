@@ -46,7 +46,7 @@
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Login to start your session</p>
-            <h2>@ViewBag.Message</h2>
+            <h2 class="text-danger">@ViewBag.Message</h2>
             <form>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group has-feedback">
@@ -72,11 +72,11 @@
             </form>
 
             <div class="social-auth-links text-center">
-                <p>- OR -</p>
+                @*<p>- OR -</p>
                 <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using Facebook</a>
                 <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
-                <br />
-                <a class="btn btn-block btn-social btn-google-plus btn-flat" href="@Url.Action("Index","HomePageTest")"><i ></i><p class="fa fa-home"style="text-align:center;margin-top:10px;font-size:20px; font-weight:bold;"> Food Home</p></a>
+                <br />*@
+                <a class="btn btn-block btn-social btn-google-plus btn-flat" href="@Url.Action("Index","Home")"><i ></i><p class="fa fa-home"style="text-align:center;margin-top:10px;font-size:20px; font-weight:bold;"> Food Home</p></a>
             </div><!-- /.social-auth-links -->
         </div><!-- /.login-box-body -->
 

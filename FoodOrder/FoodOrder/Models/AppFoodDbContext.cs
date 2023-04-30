@@ -13,7 +13,7 @@ namespace FoodOrder.Models
 
         }
         public DbSet<Products> Products { get; set; }
-        public DbSet<Users> SignupLogin { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<AdminLogins> adminLogin { get; set; }
         public DbSet<InvoiceModels> invoiceModel { get; set; }
         public DbSet<Orders> orders { get; set; }

@@ -49,6 +49,7 @@ namespace FoodWeb.Controllers
                 }
                 else
                 {
+                    ViewBag.Message = TempData["ErrorMessage"];
                     return View();
                 }
             }
@@ -70,7 +71,7 @@ namespace FoodWeb.Controllers
             }
             else
             {
-                ViewBag.Message = "Login failed";
+                TempData["ErrorMessage"] = "Login failed";
                 return RedirectToAction("LoginAdmin");
             }
         }

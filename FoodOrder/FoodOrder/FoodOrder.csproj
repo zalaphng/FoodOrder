@@ -1009,6 +1009,7 @@
     <Content Include="Content\plugins\ckeditor\skins\moono\readme.md" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
+    <Content Include="Content\custom-boostrap.css" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1069,6 +1070,7 @@
     <Content Include="Views\Shared\_LayoutAdminPage.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

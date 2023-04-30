@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="~/Content/assets/css/main.min.css"> -->
     <!-- Main Style CSS File -->
     <link rel="stylesheet" href="~/Content/assets/css/main.css">
+    <link href="@Url.Content("~/Content/custom-boostrap.css")" rel="stylesheet" type="text/css" />
+
+
 
 </head>
 <body>
@@ -81,7 +84,7 @@
                         <div class="col-12 d-flex justify-content-between align-items-center">
                             <!-- Start Logo -->
                             <div class="header__logo">
-                                <a href="/HomePageTest/Index" class="header__logo-link img-responsive">
+                                <a href="/Home/Index" class="header__logo-link img-responsive">
                                     <img class="header__logo-img img-fluid" src="~/Content/assets/img/logo/logo.png" alt="">
                                 </a>
                             </div> <!-- End Logo -->
@@ -91,7 +94,7 @@
                                     <ul class="header__nav">
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative">
-                                            <a href="/HomePageTest/Index" class="header__nav-link">Home</a>
+                                            <a href="/Home/Index" class="header__nav-link">Home</a>
                                         </li> <!-- End Single Nav link-->
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative header__nav-link">
@@ -126,9 +129,10 @@
                                 }
                                 @if (usersInCookie != null)
                                 {
-                                    string User_id = string.Empty;
-                                    User_id = userInCookie["idUser"].ToString();
-                                    <li>@User_id</li>
+                                    string User_name = string.Empty;
+                                    User_name = userInCookie["FullName"].ToString();
+                                    string user_id = userInCookie["idUser"].ToString();
+                                    <li class="header__nav-item pos-relative"><a class="header__nav-link" style="text-transform: none" href="@Url.Action("Edit", "User", new { uid = user_id })">@User_name</a></li>
                                 }
                                 else
                                 {
@@ -138,7 +142,7 @@
                                 }
                                 <!-- Start Header Add Cart Box -->
                                 <li>
-                                    <a href="/Products/Checkout" >
+                                    <a href="/Products/Checkout">
                                         <i class="icon-shopping-cart"></i>
                                         <span class="wishlist-item-count pos-absolute"></span>
                                     </a>
@@ -267,7 +271,7 @@
                 </ul>  <!-- End Mobile User Action -->
                 <div class="offcanvas-menu">
                     <ul>
-                        <li><a href="/HomePageTest/Index"><span>Home</span></a></li>
+                        <li><a href="/Home/Index"><span>Home</span></a></li>
                         <li>
                             <a href="/Products/Index"><span>Products</span></a>
                         </li>
