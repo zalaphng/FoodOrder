@@ -45,8 +45,8 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.invoices.ID)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.prodcts.ProductName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FkInvoiceID)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Products.ProductName)</td>
                                             <td><span class="label label-success">@Html.DisplayFor(modelItem => item.Qty)</span></td>
                                             <td>@Html.DisplayFor(modelItem => item.Unit_Price)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Order_Bill)</td>
@@ -57,9 +57,9 @@
                             </table>
                         </div><!-- /.table-responsive -->
                     </div><!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                        <h2 class="pull-right">Total: @TempData["OrderTotal"]</h2>
-                    </div><!-- /.box-footer -->
+                    <!--<div class="box-footer clearfix">
+                        <h2 class="pull-right">Tổng Chi Tiết Hóa Đơn: @TempData["OrderTotal"]</h2>
+                    </div>--><!-- /.box-footer -->
                 </div><!-- /.box -->
             </div>
         </div>

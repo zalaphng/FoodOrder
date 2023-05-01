@@ -1,9 +1,11 @@
-﻿@model FoodOrder.Models.Users
+﻿@model FoodOrder.Models.UserLoginModels
 
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2 class="text-warning">@TempData["Message"]</h2>
 
 @using (Html.BeginForm("Login", "User", FormMethod.Post))
 {
@@ -24,17 +26,17 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="text-danger">@ViewBag.Message</div>
                                 <div class="form-box__single-group">
-                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @for = "form-username" })
-                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "form-username" } })
+                                    <label for="form-uregister-sername-email">Email *</label>
+                                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @id = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-box__single-group">
                                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @for = "form-username-password" })
                                     <div class="password__toggle">
                                         @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "form-username-password" } })
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                         <span data-toggle="#form-username-password" class="password__toggle--btn fa fa-fw fa-eye"></span>
                                     </div>
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="d-flex justify-content-between flex-wrap m-tb-20">
                                     <label for="account-remember">

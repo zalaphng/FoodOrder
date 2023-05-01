@@ -1,0 +1,83 @@
+﻿@model FoodOrder.Models.Products
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<style>
+    .box-custom {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="box-header">
+        <h3 class="box-title">Products List</h3>
+    </div><!-- /.box-header -->
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <div class="box-body box-profile box-custom">
+                <img class="profile-user-img img-responsive img-circle" src="/@Model.ProductPicture" alt="Product Picture" style="width: 300px">
+                <h3 class="profile-username text-center">@Model.ProductName</h3>
+                <p class="text-muted text-center">Price: @Model.ProductPrice</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Order History</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Invoice ID</th>
+                            <th>Order Date</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Subtotal</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>@order.FkInvoiceID</td>
+                                <td>@order.Order_Date</td>
+                                <td>@order.Qty</td>
+                                <td>@order.Unit_Price</td>
+                                <td>@order.Order_Bill</td>
+                                <td>@order.Products.ProductName</td>
+                                <td>
+                                    @if (order.InvoiceModels.Status == 0)
+                                    {
+                                        <span class="label label-primary">Chờ xác nhận</span>
+                                    }
+                                    else if (order.InvoiceModels.Status == 1)
+                                    {
+                                        <span class="label label-warning">Đang giao hàng</span>
+                                    }
+                                    else if (order.InvoiceModels.Status == 2)
+                                    {
+                                        <span class="label label-success">Đã giao hàng</span>
+                                    }
+                                    else if (order.InvoiceModels.Status == 3)
+                                    {
+                                        <span class="label label-danger">Đã hủy</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

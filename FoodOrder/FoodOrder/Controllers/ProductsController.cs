@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,13 +14,21 @@ namespace FoodWeb.Controllers
 {
     public class ProductsController : Controller
     {
-        AppFoodDbContext db = new AppFoodDbContext();
+        FoodDB db = new FoodDB();
+        // Lấy mã hóa đơn mới nhất
+        string getInvoiceId()
+        {
+            string lastId = db.InvoiceModels.OrderByDescending(x => x.InvoiceID).FirstOrDefault()?.InvoiceID ?? "I00000";
+            int newNumber = int.Parse(lastId.Substring(1)) + 1;
+            string newId = "I" + newNumber.ToString("D5");
+            return newId;
+        }
+
         // GET: Products
         public ActionResult Index()
         {
-                List<Products> products = db.Products.ToList<Products>();
-                return View(products);
-           
+            List<Products> products = db.Products.ToList<Products>();
+            return View(products);
         }
         [HttpGet]
         public ActionResult Delete(int id)
@@ -47,20 +58,20 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-           
+
         }
         [HttpPost]
-        public ActionResult CreateNewProduct(HttpPostedFileBase file , Products products)
+        public ActionResult CreateNewProduct(HttpPostedFileBase file, Products products)
         {
-            if(file != null && file.ContentLength > 0)
+            if (file != null && file.ContentLength > 0)
                 try
                 {
                     string path = Path.Combine(Server.MapPath("~/Images"),
                                                Path.GetFileName(file.FileName));
                     file.SaveAs(path);
-                    string filename= file.FileName;
+                    string filename = file.FileName;
                     ViewBag.Message = "File uploaded successfully";
-                    products.ProductPicture = "Images/"+ filename;
+                    products.ProductPicture = "Images/" + filename;
                     db.Products.Add(products);
                     db.SaveChanges();
                 }
@@ -71,10 +82,10 @@ namespace FoodWeb.Controllers
             else
             {
                 ViewBag.Message = "You have not specified a file.";
-            } 
+            }
             return View();
         }
-    
+
         [HttpGet]
         public ActionResult EditProduct(int id)
         {
@@ -100,7 +111,7 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-            
+
         }
         [HttpPost]
         public ActionResult EditProduct(HttpPostedFileBase file, Products products)
@@ -147,9 +158,9 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-           
+
         }
-  
+
         public ActionResult addToCart(int? Id)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
@@ -171,7 +182,7 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("Login", "User");
                 }
             }
-        
+
         }
 
         List<Cart> li = new List<Cart>();
@@ -190,10 +201,12 @@ namespace FoodWeb.Controllers
                 cart.price = products.ProductPrice;
                 cart.qty = Convert.ToInt32(number);
                 cart.bill = cart.price * cart.qty;
+                HttpCookie cartCountCookie = new HttpCookie("CartCount");
                 if (TempData["cart"] == null)
                 {
                     li.Add(cart);
                     TempData["cart"] = li;
+                    cartCountCookie.Value = "1";
                 }
                 else
                 {
@@ -202,21 +215,24 @@ namespace FoodWeb.Controllers
                     //TempData["cart"] = li2;
                     List<Cart> li2 = TempData["cart"] as List<Cart>;
                     int flag = 0;
-                    foreach(var item in li2)
+                    foreach (var item in li2)
                     {
-                        if(item.productId == cart.productId)
+                        if (item.productId == cart.productId)
                         {
                             item.qty += cart.qty;
                             item.bill += cart.bill;
                             flag = 1;
                         }
                     }
-                    if(flag==0)
+                    if (flag == 0)
                     {
                         li2.Add(cart);
                     }
                     TempData["cart"] = li2;
+                    cartCountCookie.Value = li2.Count.ToString();
                 }
+
+                Response.Cookies.Add(cartCountCookie);
 
                 TempData.Keep();
                 return RedirectToAction("Index");
@@ -261,7 +277,7 @@ namespace FoodWeb.Controllers
                 }
             }
 
-           
+
         }
         [HttpPost]
         public ActionResult Checkout(Orders order)
@@ -270,12 +286,15 @@ namespace FoodWeb.Controllers
             string iduser = userInCookie["idUser"];
             List<Cart> li = TempData["cart"] as List<Cart>;
             InvoiceModels invoice = new InvoiceModels();
+            invoice.InvoiceID = getInvoiceId();
             invoice.FKUserID = iduser;
             invoice.DateInvoice = System.DateTime.Now;
+            invoice.Status = 0;
             invoice.Total_Bill = (float)TempData["Total"];
-            db.invoiceModel.Add(invoice);
+            db.InvoiceModels.Add(invoice);
             db.SaveChanges();
-            foreach(var item in li)
+
+            foreach (var item in li)
             {
                 Orders odr = new Orders();
                 odr.FkProdId = item.productId;
@@ -284,26 +303,68 @@ namespace FoodWeb.Controllers
                 odr.Qty = item.qty;
                 odr.Unit_Price = (int)item.price;
                 odr.Order_Bill = item.bill;
-                db.orders.Add(odr);
-                db.SaveChanges();
+                db.Orders.Add(odr);
+/*                try
+                {*/
+                    db.SaveChanges();
+/*                }
+                catch (DbEntityValidationException ex)
+                {
+                    foreach (var error in ex.EntityValidationErrors)
+                    {
+                        foreach (var validationError in error.ValidationErrors)
+                        {
+                            Debug.WriteLine("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                        }
+                    }
+                }*/
             }
             TempData.Remove("total");
             TempData.Remove("cart");
+            Response.Cookies["CartCount"].Value = null;
+            Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
             TempData.Keep();
             return RedirectToAction("Index");
         }
+
         public ActionResult Remove(int? id)
         {
             List<Cart> li2 = TempData["cart"] as List<Cart>;
             Cart c = li2.Where(x => x.productId == id).SingleOrDefault();
             li2.Remove(c);
             float h = 0;
-            foreach(var item in li2)
+            foreach (var item in li2)
             {
                 h += item.bill;
             }
             TempData["total"] = h;
+            Response.Cookies["CartCount"].Value = li2.Count.ToString();
+            Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Checkout");
         }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Products product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        [HttpGet]
+        public ActionResult clearCart()
+        {
+            TempData.Remove("cart");
+            Response.Cookies["CartCount"].Value = null;
+            Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
+            return RedirectToAction("Checkout");
+        }
+
     }
 }

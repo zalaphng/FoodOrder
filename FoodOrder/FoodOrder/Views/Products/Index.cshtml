@@ -31,7 +31,7 @@
                                         <div class="product__box product__default--single text-center">
                                             <!-- Start Product Image -->
                                             <div class="product__img-box  pos-relative">
-                                                <a href="#" class="product__img--link">
+                                                <a href="@Url.Action("addToCart", new { id = item.id })" class="product__img--link">
                                                     <img class="product__img img-fluid" src="~/@Html.DisplayFor(modelItem => item.ProductPicture)" alt="">
                                                 </a>
                                                 <!-- Start Product Action Link-->

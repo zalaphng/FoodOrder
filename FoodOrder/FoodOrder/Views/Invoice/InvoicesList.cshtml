@@ -1,0 +1,58 @@
+﻿@model List<FoodOrder.Models.InvoiceModels>
+
+@{
+    ViewBag.Title = "Invoices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var i = 1;
+}
+
+<h2 class="text-center">Danh sách đặt hàng</h2>
+<h3 class="text-warning">@TempData["Message"]</h3>
+<h3 class="text-warning">@TempData["SuccessMsg"]</h3>
+<h3 class="text-warning">@TempData["ErrorMsg"]</h3>
+
+<table class="table table-bordered text-center">
+    <tr>
+        <th>STT</th>
+        <th>Ngày đặt</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@(i++)</td>
+    <td>@item.DateInvoice</td>
+    <td>@item.Total_Bill</td>
+    <td>
+        @if (item.Status == 0)
+        {
+            <span class="badge bg-primary">Chờ xác nhận</span>
+        }
+        else if (item.Status == 1)
+        {
+            <span class="badge bg-warning">Đang giao hàng</span>
+        }
+        else if (item.Status == 2)
+        {
+            <span class="badge bg-success">Đã giao hàng</span>
+        }
+        else if (item.Status == 3)
+        {
+            <span class="badge bg-danger">Đã hủy</span>
+        }
+    </td>
+    <td>
+        @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
+        {
+            var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
+            if (uid == item.FKUserID)
+            {
+                @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs" })
+            }
+        }
+    </td>
+</tr>
+    }
+</table>

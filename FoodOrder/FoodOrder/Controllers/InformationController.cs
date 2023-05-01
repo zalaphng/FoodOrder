@@ -9,7 +9,7 @@ namespace FoodWeb.Controllers
 {
     public class InformationController : Controller
     {
-        AppFoodDbContext db = new AppFoodDbContext();
+        FoodDB db = new FoodDB();
         // GET: Information
         public ActionResult ContactUs()
         {
@@ -19,7 +19,7 @@ namespace FoodWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ContactUs(ContactModels contact)
         {
-            db.contactModels.Add(contact);
+            db.ContactModels.Add(contact);
             db.SaveChanges();
             return View();
         }
@@ -28,7 +28,7 @@ namespace FoodWeb.Controllers
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
-                List<ContactModels> contacts = db.contactModels.ToList<ContactModels>();
+                List<ContactModels> contacts = db.ContactModels.ToList<ContactModels>();
                 return View(contacts);
                 
             }
@@ -55,6 +55,15 @@ namespace FoodWeb.Controllers
         {
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            ContactModels contactModels = db.ContactModels.Find(id);
+            db.ContactModels.Remove(contactModels);
+            db.SaveChanges();
+            return RedirectToAction("MessageList", "Information");
         }
 
     }

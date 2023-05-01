@@ -41,7 +41,7 @@ namespace FoodOrder.Models
         [StringLength(50)]
         [Required(ErrorMessage = "Mật khẩu không trùng khớp!")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp!")]
+        //[Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp!")]
         public string ConfirmPassword { get; set; }
         [Required(ErrorMessage = "Không thể để trống")]
         public string Address { get; set; }
@@ -50,5 +50,29 @@ namespace FoodOrder.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceModels> InvoiceModels { get; set; }
+
+        public UserInformationModels ToUserInformationModel()
+        {
+            return new UserInformationModels
+            {
+                UserId = this.userid,
+                Name = this.Name,
+                Email = this.Email,
+                Address = this.Address,
+                PhoneNumber = this.PhoneNumber
+            };
+        }
+
+        public UserChangePasswordModels ToUserChangePasswordModel()
+        {
+            return new UserChangePasswordModels
+            {
+                UserId = this.userid,
+                Email = this.Email,
+                CurrentPassword = "",
+                NewPassword = "",
+                ConfirmNewPassword = "",
+            };
+        }
     }
 }

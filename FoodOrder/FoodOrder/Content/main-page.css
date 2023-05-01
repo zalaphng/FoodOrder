@@ -1,0 +1,16 @@
+.header__user-action-icon li a {
+    color: #00522D;
+}
+
+header__nav-item:hover header__nav-item-custom {
+    color: #89c74a;
+}
+
+header__nav-item-custom {
+    font-weight: 600;
+    color: #323232;
+    height: 60px;
+    line-height: 60px;
+}
+
+

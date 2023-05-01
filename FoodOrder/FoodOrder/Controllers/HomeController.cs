@@ -9,7 +9,7 @@ namespace FoodWeb.Controllers
 {
     public class HomeController : Controller
     {
-        AppFoodDbContext db = new AppFoodDbContext();
+        FoodDB db = new FoodDB();
         // GET: HomePageTest
         public ActionResult Index()
         {

@@ -12,31 +12,35 @@
 
     <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
     <!-- Vendor CSS Files -->
-    <link rel="stylesheet" href="~/Content/assets/css/vendor/jquery-ui.min.css">
+    <!--<link rel="stylesheet" href="~/Content/assets/css/vendor/jquery-ui.min.css">
     <link rel="stylesheet" href="~/Content/assets/css/vendor/fontawesome.css">
     <link rel="stylesheet" href="~/Content/assets/css/vendor/plaza-icon.css">
-    <link rel="stylesheet" href="~/Content/assets/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/vendor/bootstrap.min.css">-->
 
     <!-- Plugin CSS Files -->
-    <link rel="stylesheet" href="~/Content/assets/css/plugin/slick.css">
+    <!--<link rel="stylesheet" href="~/Content/assets/css/plugin/slick.css">
     <link rel="stylesheet" href="~/Content/assets/css/plugin/material-scrolltop.css">
     <link rel="stylesheet" href="~/Content/assets/css/plugin/price_range_style.css">
     <link rel="stylesheet" href="~/Content/assets/css/plugin/in-number.css">
     <link rel="stylesheet" href="~/Content/assets/css/plugin/venobox.min.css">
-    <link rel="stylesheet" href="~/Content/assets/css/plugin/jquery.lineProgressbar.css">
+    <link rel="stylesheet" href="~/Content/assets/css/plugin/jquery.lineProgressbar.css">-->
 
     <!-- Use the minified version files listed below for better performance and remove the files listed above -->
-    <!-- <link rel="stylesheet" href="~/Content/assets/css/vendor/vendor.min.css"/>
+     <link rel="stylesheet" href="~/Content/assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="~/Content/assets/css/plugin/plugins.min.css"/>
-    <link rel="stylesheet" href="~/Content/assets/css/main.min.css"> -->
+    <link rel="stylesheet" href="~/Content/assets/css/main.min.css"> 
     <!-- Main Style CSS File -->
     <link rel="stylesheet" href="~/Content/assets/css/main.css">
-    <link href="@Url.Content("~/Content/custom-boostrap.css")" rel="stylesheet" type="text/css" />
-
-
-
+    <!-- My CSS -->
+    <link rel="stylesheet" href="~/Content/main-page.css">
 </head>
 <body>
+    @*@if (TempData["cart"] == null && Response.Cookies["CartCount"] != null)
+    {
+        Response.Cookies["CartCount"].Value = null;
+        Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
+    }*@
+
     <!-- ::::::  Start Header Section  ::::::  -->
     <header>
         <!--  Start Large Header Section   -->
@@ -51,7 +55,7 @@
                                     <span>Free Delivery: Take advantage of our time to save event</span>
                                 </div>
                                 <ul class="header__top-content--right user-set-role d-flex">
-                                    
+
                                     @{
                                         var userInCookie = Request.Cookies["UserInfo"];
                                     }
@@ -68,10 +72,7 @@
                                         <li><a href="@Url.Action("Logout","User")" class="btn">Logout</a></li>
                                     }
                                 </ul>
-                                
-                                    
-                                    
-                                
+
                             </div>
                         </div>
                     </div>
@@ -102,12 +103,22 @@
                                         </li> <!-- Start Single Nav link-->
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative">
-                                            <a href="/Products/Checkout" class="header__nav-link">Checkout</a>
+                                            @{
+                                                var usersInCookie = Request.Cookies["UserInfo"];
+                                            }
+                                            @if (usersInCookie != null)
+                                            {
+                                                string user_id = userInCookie["idUser"].ToString();
+                                                <a href="@Url.Action("InvoicesList", "Invoice", new { FKUserID = user_id })" class="header__nav-link">Checkout</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Login", "User")" class="header__nav-link">Checkout</a>
+                                            }
+                                        </li>
 
-                                        </li> <!-- Start Single Nav link-->
-                                        <!--Start Single Nav link-->
 
-                                        </li> <!-- End Single Nav link-->
+                                        <!-- End Single Nav link-->
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative">
                                             <a href="/Information/AboutUs" class="header__nav-link">About Us</a>
@@ -124,15 +135,20 @@
                             <!-- Start Wishlist-AddCart -->
                             <ul class="header__user-action-icon">
                                 <!-- Start Header Wishlist Box -->
-                                @{
-                                    var usersInCookie = Request.Cookies["UserInfo"];
-                                }
                                 @if (usersInCookie != null)
                                 {
                                     string User_name = string.Empty;
                                     User_name = userInCookie["FullName"].ToString();
                                     string user_id = userInCookie["idUser"].ToString();
-                                    <li class="header__nav-item pos-relative"><a class="header__nav-link" style="text-transform: none" href="@Url.Action("Edit", "User", new { uid = user_id })">@User_name</a></li>
+                                    @*<li class="header__nav-item pos-relative"><a class="header__nav-link" style="text-transform: none" href="@Url.Action("Edit", "User", new { uid = user_id })">@User_name</a></li>*@
+                                    
+                                    <li class="header__nav-item dropdown pos-relative">
+                                        <button class="header__nav-item-custom dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-transform: none">@User_name</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="@Url.Action("Edit", "User", new { uid = user_id })">Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("ChangePassword", "User", new { uid = user_id })">Change Password</a>
+                                        </div>
+                                    </li>
                                 }
                                 else
                                 {
@@ -144,7 +160,16 @@
                                 <li>
                                     <a href="/Products/Checkout">
                                         <i class="icon-shopping-cart"></i>
-                                        <span class="wishlist-item-count pos-absolute"></span>
+                                        @if (usersInCookie != null)
+                                        {
+                                            if (Request.Cookies["CartCount"] != null)
+                                            {
+                                                int cartCount = 0;
+                                                try { cartCount = Int32.Parse(Request.Cookies["CartCount"].Value); }
+                                                catch { }
+                                                <span class="wishlist-item-count pos-absolute">@cartCount</span>
+                                            }
+                                        }
                                     </a>
                                 </li> <!-- End Header Add Cart Box -->
                             </ul>
@@ -239,7 +264,7 @@
             </div>
 
             <div class="offcanvas-inner">
-            
+
                 <form class="header-search m-tb-15" action="#" method="post">
                     <div class="header-search__content pos-relative">
                         <input type="search" name="header-search" placeholder="Search our store" required>
@@ -290,7 +315,7 @@
                 <li class="offcanvas__social-list"><a href="#" class="offcanvas__social-link"><i class="fab fa-instagram"></i></a></li>
             </ul>
         </div> <!--  End Mobile-offcanvas Menu Section   -->
-     
+
 
         <div class="offcanvas-overlay"></div>
     </header>  <!-- :::::: End Header Section ::::::  -->

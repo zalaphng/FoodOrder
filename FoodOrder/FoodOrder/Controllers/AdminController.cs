@@ -9,7 +9,7 @@ namespace FoodWeb.Controllers
 {
     public class AdminController : Controller
     {
-        AppFoodDbContext db = new AppFoodDbContext();
+        FoodDB db = new FoodDB();
         // GET: Admin
         public ActionResult Index()
         {
@@ -57,9 +57,10 @@ namespace FoodWeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoginAdmin(AdminLogins model)
+        public ActionResult LoginAdmin(UserLoginModels model)
         {
-            var data = db.adminLogin.Where(s => s.Email.Equals(model.Email) && s.Password.Equals(model.Password)).ToList();
+            var hashPassword = UserController.GetMd5Hash(model.Password);
+            var data = db.AdminLogins.Where(s => s.Email.Equals(model.Email) && s.Password.Equals(hashPassword)).ToList();
             if (data.Count() > 0)
             {
                 HttpCookie cooskie = new HttpCookie("AdminInfo");
@@ -92,7 +93,7 @@ namespace FoodWeb.Controllers
             if (adminInCookie != null)
             {
                 float t = 0;
-                List<Orders> order = db.orders.ToList<Orders>();
+                List<Orders> order = db.Orders.ToList<Orders>();
                 foreach(var item in order)
                 {
                     t += item.Order_Bill;
@@ -119,7 +120,7 @@ namespace FoodWeb.Controllers
             if (adminInCookie != null)
             {
                 float t = 0;
-                List<InvoiceModels> invoice = db.invoiceModel.ToList<InvoiceModels>();
+                List<InvoiceModels> invoice = db.InvoiceModels.ToList<InvoiceModels>();
                 
                 foreach (var item in invoice)
                 {

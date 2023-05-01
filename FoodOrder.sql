@@ -144,6 +144,8 @@ VALUES
     ('U00002', N'User 2', N'user2@gmail.com', N'testuser', N'testuser', 'ABC', '0219481249')
 
 
+-- Hóa Đơn
+
 INSERT INTO [InvoiceModels]
     ([InvoiceID], [DateInvoice], [Total_Bill], [Status], [FKUserID])
 VALUES
@@ -160,6 +162,8 @@ INSERT INTO [InvoiceModels]
     ([InvoiceID], [DateInvoice], [Total_Bill], [Status], [FKUserID])
 VALUES
     ('I00004', N'2020-12-31 19:15:53', 1635, 0, 'U00001')
+
+-- Chi Tiết Hóa Đơn
 
 SET IDENTITY_INSERT [Orders] ON
 INSERT INTO [Orders]

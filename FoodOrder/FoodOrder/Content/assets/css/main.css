@@ -3443,7 +3443,7 @@ input.round-input {
   margin-left: 5px;
 }
 .header__nav-link::after {
-  position: absolute;
+  /* position: absolute; */
   content: "";
   height: 2px;
   width: 0%;
