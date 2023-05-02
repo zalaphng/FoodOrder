@@ -30,6 +30,7 @@ namespace FoodOrder.Models
         public virtual DbSet<InvoiceModels> InvoiceModels { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<ProductTypes> ProductTypes { get; set; }
         public virtual DbSet<Users> Users { get; set; }
     }
 }

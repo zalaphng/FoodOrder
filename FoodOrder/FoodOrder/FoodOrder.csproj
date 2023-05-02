@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Models\AppFoodDbContext.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Models\ContactModels.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
@@ -203,7 +204,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FoodModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceModels.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
@@ -213,6 +213,9 @@
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Products.cs">
+      <DependentUpon>FoodModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductTypes.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserChangePasswordModels.cs" />
@@ -918,13 +921,6 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\FoodModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FoodModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\FoodModel.edmx.diagram">
-      <DependentUpon>FoodModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-brands-400.eot" />
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-brands-400.ttf" />
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-brands-400.woff" />
@@ -1015,6 +1011,13 @@
     <Content Include="Content\plugins\input-mask\phone-codes\phone-be.json" />
     <Content Include="Content\plugins\input-mask\phone-codes\phone-codes.json" />
     <Content Include="Content\main-page.css" />
+    <EntityDeploy Include="Models\FoodModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FoodModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\FoodModel.edmx.diagram">
+      <DependentUpon>FoodModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1084,6 +1087,7 @@
     <Content Include="Views\Admin\ListOfUsers.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\UserInvoices.cshtml" />
+    <Content Include="Views\Products\IndexByProductType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

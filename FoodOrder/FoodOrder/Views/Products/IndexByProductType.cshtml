@@ -24,7 +24,11 @@
                         {
                             if (productType.id == 0)
                             {
-                                <li><a class="nav-link active" href="@Url.Action("Index", "Products")">@productType.ProductTypeName</a></li>
+                                <li><a class="nav-link" href="@Url.Action("Index", "Products")">@productType.ProductTypeName</a></li>
+                            }
+                            else if (productType.id == ViewBag.NowId)
+                            {
+                                <li><a class="nav-link active" href="@Url.Action("IndexByProductType", "Products", new { id = productType.id })">@productType.ProductTypeName</a></li>
                             }
                             else
                             {
@@ -33,25 +37,6 @@
                         }
                     </ul>
                 </div>
-
-                <!-- Dropdown Test -->
-                @*<div class="section-content section-content--border m-b-35">
-                        <h5 class="section-content__title">Categories</h5>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle tablist tablist--style-blue tablist--style-gap-20 nav active" style="color: #89c74a; font-size: 16px; font-weight: 400" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @ViewBag.ProductTypes[0].ProductTypeName
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-left ml-auto" aria-labelledby="dropdownMenuButton">
-                                @foreach (var productType in ViewBag.ProductTypes)
-                                {
-                                    if (productType.id != 0)
-                                    {
-                                        <a class="dropdown-item" href="@Url.Action("IndexByProductType", "Products", new { id = productType.id })">@productType.ProductTypeName</a>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    </div>*@
 
                 <!-- End Section Title -->
             </div>

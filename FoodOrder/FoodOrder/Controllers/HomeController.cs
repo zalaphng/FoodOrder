@@ -13,8 +13,11 @@ namespace FoodWeb.Controllers
         // GET: HomePageTest
         public ActionResult Index()
         {
-                List<Products> products = db.Products.ToList<Products>();
-                return View(products);
+            List<Products> products = db.Products.ToList<Products>();
+            var productTypes = db.ProductTypes.ToList();
+            productTypes.Insert(0, new ProductTypes(0, "All"));
+            ViewBag.ProductTypes = productTypes;
+            return View(products);
         }
     }
 }

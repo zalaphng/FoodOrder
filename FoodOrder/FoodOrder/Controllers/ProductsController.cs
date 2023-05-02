@@ -28,6 +28,23 @@ namespace FoodWeb.Controllers
         public ActionResult Index()
         {
             List<Products> products = db.Products.ToList<Products>();
+            var productTypes = db.ProductTypes.ToList();
+            productTypes.Insert(0, new ProductTypes(0, "All"));
+            ViewBag.ProductTypes = productTypes;
+            return View(products);
+        }
+
+        public ActionResult IndexByProductType(int id)
+        {
+            if (id == 0)
+            {
+                return View();
+            }
+            var productTypes = db.ProductTypes.ToList();
+            productTypes.Insert(0, new ProductTypes(0, "All"));
+            var products = db.Products.Where(p => p.FKProductType == id).ToList();
+            ViewBag.ProductTypes = productTypes;
+            ViewBag.NowId = id;
             return View(products);
         }
         [HttpGet]

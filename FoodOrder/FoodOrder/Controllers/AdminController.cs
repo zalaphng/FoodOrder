@@ -157,7 +157,6 @@ namespace FoodWeb.Controllers
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
-                float t = 0;
                 List<Users> user = db.Users.ToList<Users>();
                 return View(user);
             }

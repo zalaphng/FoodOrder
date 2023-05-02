@@ -53,6 +53,14 @@
           <Property Name="ProductName" Type="nvarchar(max)" />
           <Property Name="ProductPrice" Type="int" Nullable="false" />
           <Property Name="ProductPicture" Type="nvarchar(max)" />
+          <Property Name="FKProductType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductTypeName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -102,12 +110,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="FKProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodOrderDBModelStoreContainer">
           <EntitySet Name="AdminLogins" EntityType="Self.AdminLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactModels" EntityType="Self.ContactModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceModels" EntityType="Self.InvoiceModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductTypes" EntityType="Self.ProductTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_InvoiceModels_dbo_Users_FKUserID" Association="Self.FK_dbo_InvoiceModels_dbo_Users_FKUserID">
             <End Role="Users" EntitySet="Users" />
@@ -120,6 +141,10 @@
           <AssociationSet Name="FK_dbo_Orders_dbo_Products_FkProdId" Association="Self.FK_dbo_Orders_dbo_Products_FkProdId">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductTypes" Association="Self.FK_dbo_Products_dbo_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -179,7 +204,17 @@
           <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProductPrice" Type="Int32" Nullable="false" />
           <Property Name="ProductPicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FKProductType" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Orders_dbo_Products_FkProdId" FromRole="Products" ToRole="Orders" />
+          <NavigationProperty Name="ProductTypes" Relationship="Self.FK_dbo_Products_dbo_ProductTypes" FromRole="Products" ToRole="ProductTypes" />
+        </EntityType>
+        <EntityType Name="ProductTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductTypeName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_dbo_Products_dbo_ProductTypes" FromRole="ProductTypes" ToRole="Products" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -230,12 +265,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_dbo_Products_dbo_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="FKProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AdminLogins" EntityType="Self.AdminLogins" />
           <EntitySet Name="ContactModels" EntityType="Self.ContactModels" />
           <EntitySet Name="InvoiceModels" EntityType="Self.InvoiceModels" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
           <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="ProductTypes" EntityType="Self.ProductTypes" />
           <EntitySet Name="Users" EntityType="Self.Users" />
           <AssociationSet Name="FK_dbo_InvoiceModels_dbo_Users_FKUserID" Association="Self.FK_dbo_InvoiceModels_dbo_Users_FKUserID">
             <End Role="Users" EntitySet="Users" />
@@ -248,6 +296,10 @@
           <AssociationSet Name="FK_dbo_Orders_dbo_Products_FkProdId" Association="Self.FK_dbo_Orders_dbo_Products_FkProdId">
             <End Role="Products" EntitySet="Products" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Products_dbo_ProductTypes" Association="Self.FK_dbo_Products_dbo_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -307,6 +359,15 @@
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
                 <ScalarProperty Name="ProductPicture" ColumnName="ProductPicture" />
+                <ScalarProperty Name="FKProductType" ColumnName="FKProductType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="FoodOrderDBModel.ProductTypes">
+              <MappingFragment StoreEntitySet="ProductTypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ProductTypeName" ColumnName="ProductTypeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

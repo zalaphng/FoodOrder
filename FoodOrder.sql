@@ -127,7 +127,11 @@ VALUES
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (28, N'Fresh river fish', 25, N'Images/fish.jpg', 1)
+    (28, N'Fresh river fish', 25, N'Images/fish.jpg', 2)
+INSERT INTO [Products]
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
+VALUES
+    (5, N'Fresh river fish', 25, N'Images/fish.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
@@ -135,7 +139,7 @@ VALUES
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (30, N'Fresh red meat', 55, N'Images/redmeat.jpg', 1)
+    (30, N'Fresh red meat', 55, N'Images/redmeat.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
@@ -143,7 +147,7 @@ VALUES
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (33, N'Ripe grapes', 39, N'Images/graps.jpg', 2)
+    (33, N'Ripe grapes', 39, N'Images/graps.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES

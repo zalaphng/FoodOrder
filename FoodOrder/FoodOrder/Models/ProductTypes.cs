@@ -12,22 +12,24 @@ namespace FoodOrder.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Products
+    public partial class ProductTypes
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Products()
+        public ProductTypes()
         {
-            this.Orders = new HashSet<Orders>();
+            this.Products = new HashSet<Products>();
         }
-    
+
+        public ProductTypes(int id, string productTypeName)
+        {
+            this.id = id;
+            this.ProductTypeName = productTypeName;
+        }
+
         public int id { get; set; }
-        public string ProductName { get; set; }
-        public int ProductPrice { get; set; }
-        public string ProductPicture { get; set; }
-        public int FKProductType { get; set; }
+        public string ProductTypeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Orders> Orders { get; set; }
-        public virtual ProductTypes ProductTypes { get; set; }
+        public virtual ICollection<Products> Products { get; set; }
     }
 }

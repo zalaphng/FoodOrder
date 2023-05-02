@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="59180e0fcebf4091a4fcf4aeddd45179" Name="Diagram1">
+      <Diagram DiagramId="0b381740c2dd4e2980bd2663d4048a5c" Name="Diagram1">
         <EntityTypeShape EntityType="FoodOrderDBModel.AdminLogins" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodOrderDBModel.ContactModels" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderDBModel.InvoiceModels" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderDBModel.InvoiceModels" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FoodOrderDBModel.Orders" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderDBModel.Products" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderDBModel.Users" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderDBModel.Products" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderDBModel.ProductTypes" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderDBModel.Users" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_InvoiceModels_dbo_Users_FKUserID" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Orders_dbo_InvoiceModels_FkInvoiceID" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Orders_dbo_Products_FkProdId" ManuallyRouted="false" />
+        <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Products_dbo_ProductTypes" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
