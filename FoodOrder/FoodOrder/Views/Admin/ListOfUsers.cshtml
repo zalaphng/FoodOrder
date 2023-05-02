@@ -24,6 +24,7 @@
                 <div class="box box-info">
                     <div class="box-header with-border">
                         <h3 class="box-title">Danh sách khách hàng</h3>
+                        <h3 class="text-success">@TempData["Message"]</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -39,6 +40,7 @@
                                         <th>Email</th>
                                         <th>Address</th>
                                         <th>Phone Number</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,10 +49,18 @@
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.userid)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        @*<td>@Html.DisplayFor(modelItem => item.Email, new { @class = "email-text" })</td>*@
+                                        <td>
+                                            @{
+                                                var email = item.Email;
+                                            }
+                                            <a href="mailto:@email" class="email-text">@email</a>
+                                        </td>
                                         <td>@Html.DisplayFor(modelItem => item.Address)</td>
                                         <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                         <td>
                                             @Html.ActionLink("Cập nhật thông tin", "EditUser", "Admin", new { uid = item.userid }, new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Thay đổi mật khẩu", "EditUserPassword", "Admin", new { uid = item.userid }, new { @class = "btn btn-success" })
                                             @Html.ActionLink("Danh sách hóa đơn", "UserInvoices", "Admin", new { UserID = item.userid }, new { @class = "btn btn-info" })
                                             <a href="@Url.Action("DeleteUser", "Admin", new { id = item.userid })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này \n *Sẽ xóa tất cả hóa đơn của khách hàng này*?')">Xóa Khách hàng</a>
                                         </td>

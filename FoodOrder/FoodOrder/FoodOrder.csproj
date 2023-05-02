@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\AdminModels\UserChangePasswordAdminModels.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -183,8 +184,8 @@
     <Compile Include="Models\AdminLogins.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AppFoodDbContext.cs" />
-    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\OtherModels\AppFoodDbContext.cs" />
+    <Compile Include="Models\OtherModels\Cart.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Models\ContactModels.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
@@ -218,9 +219,9 @@
     <Compile Include="Models\ProductTypes.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserChangePasswordModels.cs" />
-    <Compile Include="Models\UserInformationModels.cs" />
-    <Compile Include="Models\UserLoginModels.cs" />
+    <Compile Include="Models\UserModels\UserChangePasswordModels.cs" />
+    <Compile Include="Models\UserModels\UserInformationModels.cs" />
+    <Compile Include="Models\UserModels\UserLoginModels.cs" />
     <Compile Include="Models\Users.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
@@ -1088,6 +1089,7 @@
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\UserInvoices.cshtml" />
     <Content Include="Views\Products\IndexByProductType.cshtml" />
+    <Content Include="Views\Admin\EditUserPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

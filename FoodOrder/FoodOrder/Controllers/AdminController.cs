@@ -177,66 +177,188 @@ namespace FoodWeb.Controllers
         public ActionResult DeleteUser(string id)
         {
 
-            var invoices = db.InvoiceModels.Where(i => i.FKUserID == id).ToList();
-            
-            if (invoices.Count != 0)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                foreach (var invoice in invoices)
-                {
-                    var orders = db.Orders.Where(o => o.FkInvoiceID == invoice.InvoiceID);
+                var invoices = db.InvoiceModels.Where(i => i.FKUserID == id).ToList();
 
-                    foreach (var order in orders)
+                if (invoices.Count != 0)
+                {
+                    foreach (var invoice in invoices)
                     {
-                        db.Orders.Remove(order);
+                        var orders = db.Orders.Where(o => o.FkInvoiceID == invoice.InvoiceID);
+
+                        foreach (var order in orders)
+                        {
+                            db.Orders.Remove(order);
+                        }
+                        db.InvoiceModels.Remove(invoice);
                     }
-                    db.InvoiceModels.Remove(invoice);
+                }
+
+                var user = db.Users.Find(id);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                db.Users.Remove(user);
+                db.SaveChanges();
+
+                return RedirectToAction("ListOfUsers", "Admin");
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-
-            var user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            db.Users.Remove(user);
-            db.SaveChanges();
-
-            return RedirectToAction("ListOfUsers", "Admin");
         }
 
         public ActionResult EditUser(string uid)
         {
-            var user = db.Users.FirstOrDefault(u => u.userid == uid);
-            if (user == null)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                return HttpNotFound();
+                var user = db.Users.FirstOrDefault(u => u.userid == uid);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                // Hiển thị view với dữ liệu của người dùng tìm được
+                var userInformation = user.ToUserInformationModel();
+                return View(userInformation);
             }
-            string password = UserController.GetMd5Hash(user.Password);
-            user.Password = password;
-            // Hiển thị view với dữ liệu của người dùng tìm được
-            return View(user);
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser([Bind(Include = "userid,Name,Email,Password,ConfirmPassword,Address,PhoneNumber")] Users user)
+        public ActionResult EditUser([Bind(Include = "userId,Name,Email,Address,PhoneNumber")] UserInformationModels user)
         {
-            if (ModelState.IsValid)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                string hashPassword = UserController.GetMd5Hash(user.Password);
-                user.Password = hashPassword;
-                user.ConfirmPassword = hashPassword;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    var existingUser = db.Users.Find(user.UserId);
+                    if (existingUser == null)
+                    {
+                        return HttpNotFound();
+                    }
+                    existingUser.Name = user.Name;
+                    existingUser.Email = user.Email;
+                    existingUser.Address = user.Address;
+                    existingUser.PhoneNumber = user.PhoneNumber;
+                    db.Entry(existingUser).State = EntityState.Modified;
+                    db.SaveChanges();
 
-                TempData["Message"] = "Cập nhật thông tin thành công";
-                ViewBag.Message = TempData["Message"];
-                return RedirectToAction("ListOfUsers");
+                    TempData["Message"] = "Cập nhật thông tin thành công";
+                    ViewBag.Message = TempData["Message"];
+                    return RedirectToAction("ListOfUsers", new { uid = user.UserId });
+                }
+                return View(user);
             }
-            return View(user);
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
         }
 
+        public ActionResult EditUserPassword(string uid)
+        {
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                var user = db.Users.FirstOrDefault(u => u.userid == uid);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+
+                // Hiển thị view với dữ liệu của người dùng tìm được
+                var userCP = user.ToUserChangePasswordModel();
+                return View(userCP);
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUserPassword([Bind(Include = "userId,Email,CurrentPassword,NewPassword,ConfirmNewPassword")] UserChangePasswordAdminModels user)
+        {
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var existingUser = db.Users.FirstOrDefault(u => u.userid == user.UserId);
+                    if (existingUser == null)
+                    {
+                        return HttpNotFound();
+                    }
+
+                    // Cập nhật mật khẩu mới
+                    string hashPassword = UserController.GetMd5Hash(user.NewPassword);
+                    existingUser.Password = hashPassword;
+                    existingUser.ConfirmPassword = hashPassword;
+                    db.Entry(existingUser).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    TempData["Message"] = "Cập nhật mật khẩu thành công";
+                    return RedirectToAction("ListOfUsers", new { uid = existingUser.userid });
+                }
+                return View(user);
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
+        }
         public ActionResult UserInvoices(string UserID)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];

@@ -74,5 +74,16 @@ namespace FoodOrder.Models
                 ConfirmNewPassword = "",
             };
         }
+
+        public UserChangePasswordAdminModels ToUserChangePasswordAdminModel()
+        {
+            return new UserChangePasswordAdminModels
+            {
+                UserId = this.userid,
+                Email = this.Email,
+                NewPassword = "",
+                ConfirmNewPassword = "",
+            };
+        }
     }
 }

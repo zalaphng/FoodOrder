@@ -207,7 +207,6 @@ namespace FoodWeb.Controllers
                 Response.Cookies.Add(userCookie);
 
                 TempData["Message"] = "Cập nhật thông tin thành công";
-                ViewBag.Message = TempData["Message"];
                 return RedirectToAction("Edit", new { uid = user.UserId });
             }
 
@@ -277,7 +276,8 @@ namespace FoodWeb.Controllers
                     return HttpNotFound();
                 }
 
-                if (existingUser.Password != user.CurrentPassword)
+                string currentPassword = GetMd5Hash(user.CurrentPassword);
+                if (existingUser.Password != currentPassword)
                 {
                     ViewBag.ErrorMessage = "Mật khẩu cũ không đúng!";
                     return View("ChangePassword", user);
