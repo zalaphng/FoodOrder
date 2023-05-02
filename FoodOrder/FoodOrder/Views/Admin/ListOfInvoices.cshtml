@@ -36,6 +36,7 @@
                                     <tr>
                                         <th>Mã hóa đơn</th>
                                         <th>User Name</th>
+                                        <th>Address</th>
                                         <th>Total Bill</th>
                                         <th>Invoice Date</th>
                                         <th>Status</th>
@@ -47,6 +48,7 @@
                                     <tr>
                                         <td>@Html.DisplayFor(modelItem => item.InvoiceID)</td>
                                         <td>@Html.DisplayFor(modelItem => item.Users.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Users.Address) </td>
                                         <td>@Html.DisplayFor(modelItem => item.Total_Bill)</td>
                                         <td>@Html.DisplayFor(modelItem => item.DateInvoice)</td>
                                         <td>

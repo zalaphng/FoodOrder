@@ -33,10 +33,27 @@ namespace FoodWeb.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Products products = db.Products.Find(id);
-            db.Products.Remove(products);
-            db.SaveChanges();
-            return RedirectToAction("Index", "Admin");
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                Products products = db.Products.Find(id);
+                db.Products.Remove(products);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
+
         }
         [HttpGet]
         public ActionResult CreateNewProduct()
@@ -304,20 +321,20 @@ namespace FoodWeb.Controllers
                 odr.Unit_Price = (int)item.price;
                 odr.Order_Bill = item.bill;
                 db.Orders.Add(odr);
-/*                try
-                {*/
-                    db.SaveChanges();
-/*                }
-                catch (DbEntityValidationException ex)
-                {
-                    foreach (var error in ex.EntityValidationErrors)
-                    {
-                        foreach (var validationError in error.ValidationErrors)
-                        {
-                            Debug.WriteLine("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
-                        }
-                    }
-                }*/
+                /*                try
+                                {*/
+                db.SaveChanges();
+                /*                }
+                                catch (DbEntityValidationException ex)
+                                {
+                                    foreach (var error in ex.EntityValidationErrors)
+                                    {
+                                        foreach (var validationError in error.ValidationErrors)
+                                        {
+                                            Debug.WriteLine("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
+                                        }
+                                    }
+                                }*/
             }
             TempData.Remove("total");
             TempData.Remove("cart");
@@ -345,25 +362,45 @@ namespace FoodWeb.Controllers
 
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Products products = db.Products.Find(id);
+                db.Products.Remove(products);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Admin");
             }
-            Products product = db.Products.Find(id);
-            if (product == null)
+            else
             {
-                return HttpNotFound();
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
             }
-            return View(product);
         }
 
         [HttpGet]
         public ActionResult clearCart()
         {
-            TempData.Remove("cart");
-            Response.Cookies["CartCount"].Value = null;
-            Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
-            return RedirectToAction("Checkout");
+
+            var userInCookie = Request.Cookies["UserInfo"];
+            if (userInCookie != null)
+            {
+                TempData.Remove("cart");
+                Response.Cookies["CartCount"].Value = null;
+                Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
+                return RedirectToAction("Checkout");
+            }
+            else
+            {
+                return RedirectToAction("LoginAdmin", "Admin");
+            }
+
         }
 
     }

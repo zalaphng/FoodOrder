@@ -29,8 +29,7 @@ namespace FoodWeb.Controllers
             if (adminInCookie != null)
             {
                 List<ContactModels> contacts = db.ContactModels.ToList<ContactModels>();
-                return View(contacts);
-                
+                return View(contacts);       
             }
             else
             {
@@ -60,10 +59,26 @@ namespace FoodWeb.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            ContactModels contactModels = db.ContactModels.Find(id);
-            db.ContactModels.Remove(contactModels);
-            db.SaveChanges();
-            return RedirectToAction("MessageList", "Information");
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                ContactModels contactModels = db.ContactModels.Find(id);
+                db.ContactModels.Remove(contactModels);
+                db.SaveChanges();
+                return RedirectToAction("MessageList", "Information");
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
         }
 
     }

@@ -1,4 +1,3 @@
-
 USE master
 DROP DATABASE FoodOrderDB
 GO
@@ -27,6 +26,12 @@ CREATE TABLE ContactModels
     CONSTRAINT [PK_dbo.ContactModels] PRIMARY KEY CLUSTERED ([contactId] ASC)
 );
 
+CREATE TABLE [ProductTypes]
+(
+    [id] INT IDENTITY (1, 1) NOT NULL,
+    [ProductTypeName] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_dbo.ProductsTypes] PRIMARY KEY CLUSTERED ([id] ASC)
+);
 
 CREATE TABLE [Products]
 (
@@ -34,7 +39,9 @@ CREATE TABLE [Products]
     [ProductName] NVARCHAR (MAX) NULL,
     [ProductPrice] INT NOT NULL,
     [ProductPicture] NVARCHAR (MAX) NULL,
-    CONSTRAINT [PK_dbo.Products] PRIMARY KEY CLUSTERED ([id] ASC)
+    [FKProductType] int not null,
+    CONSTRAINT [PK_dbo.Products] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_dbo.Products_dbo.ProductTypes] FOREIGN KEY ([FKProductType]) REFERENCES [ProductTypes] ([id])
 );
 
 CREATE TABLE [Users]
@@ -77,71 +84,95 @@ CREATE TABLE [Orders]
 );
 GO
 
+-- Admin
+
 INSERT INTO [AdminLogins]
     ([adminid], [Email], [Password])
 VALUES
-    ('A01', N'admin@gmail.com', N'admin')
+    ('A01', N'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3')
+
+-- Liên hệ
 
 SET IDENTITY_INSERT [ContactModels] ON
 INSERT INTO [ContactModels]
     ([contactId], [Name], [Email], [Subject], [Message])
 VALUES
-    (1, N'M Zaryab Rafique', N'maar.zaryab@yahoo.com', N'Test', N'Where is Food Web')
+    (1, N'Test', N'test.test@yahoo.com', N'Test', N'Where is Food Web')
 SET IDENTITY_INSERT [ContactModels] OFF
 
+-- Loại hàng hóa
+
+SET IDENTITY_INSERT [ProductTypes] ON
+INSERT INTO [ProductTypes]
+    ([id], [ProductTypeName])
+VALUES
+    (1, N'Fruits')
+INSERT INTO [ProductTypes]
+    ([id], [ProductTypeName])
+VALUES
+    (2, N'Meats')
+SET IDENTITY_INSERT [ProductTypes] OFF
+
+-- Hàng hóa
 
 SET IDENTITY_INSERT [Products] ON
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (2, N'Green Apple', 100, N'Images/product-home-1-img-6.jpg')
+    (2, N'Green Apple', 100, N'Images/product-home-1-img-6.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (4, N'Pomegranate', 300, N'Images/product-home-1-img-3.jpg')
+    (4, N'Pomegranate', 300, N'Images/product-home-1-img-3.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (28, N'Fresh river fish', 25, N'Images/fish.jpg')
+    (28, N'Fresh river fish', 25, N'Images/fish.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (29, N'Cabbage vegetables', 50, N'Images/cabbage.jpg')
+    (29, N'Cabbage vegetables', 50, N'Images/cabbage.jpg', 2)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (30, N'Fresh red meat', 55, N'Images/redmeat.jpg')
+    (30, N'Fresh red meat', 55, N'Images/redmeat.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (31, N'Fresh orange', 19, N'Images/orange.jpg')
+    (31, N'Fresh orange', 19, N'Images/orange.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (33, N'Ripe grapes', 39, N'Images/graps.jpg')
+    (33, N'Ripe grapes', 39, N'Images/graps.jpg', 2)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (34, N'Red Tomato', 10, N'Images/tomato.jpg')
+    (34, N'Red Tomato', 10, N'Images/tomato.jpg', 1)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (35, N'Cow fresh milk', 55, N'Images/milk.jpg')
+    (35, N'Cow fresh milk', 55, N'Images/milk.jpg', 2)
 INSERT INTO [Products]
-    ([id], [ProductName], [ProductPrice], [ProductPicture])
+    ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (37, N'Fresh green vegetable', 20, N'Images/green.jpg')
+    (37, N'Fresh green vegetable', 20, N'Images/green.jpg', 1)
 SET IDENTITY_INSERT [Products] OFF
 
+-- Khách hàng
+-- Mật khẩu: testuser
 
 INSERT INTO [Users]
     ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
 VALUES
-    ('U00001', N'User 1', N'user@gmail.com', N'testuser', N'testuser', 'ABC', '0219481249')
+    ('U00001', N'User 1', N'user@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
 INSERT INTO [Users]
     ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
 VALUES
-    ('U00002', N'User 2', N'user2@gmail.com', N'testuser', N'testuser', 'ABC', '0219481249')
+    ('U00002', N'User 2', N'user2@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
+INSERT INTO [Users]
+    ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
+VALUES
+    ('U00003', N'User 3', N'user3@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
 
 
 -- Hóa Đơn

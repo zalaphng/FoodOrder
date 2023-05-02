@@ -1,0 +1,87 @@
+﻿@model List<FoodOrder.Models.InvoiceModels>
+
+@{
+    ViewBag.Title = "Invoices";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            List Of Orders
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Orders</li>
+        </ol>
+    </section>
+    <section class="content">
+
+        <div class="row">
+            <div class="col-md-8">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Latest Orders</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <h2 class="text-center">Danh sách đặt hàng</h2>
+                        <h3 class="text-warning">@TempData["Message"]</h3>
+                        <h3 class="text-warning">@TempData["SuccessMsg"]</h3>
+                        <h3 class="text-warning">@TempData["ErrorMsg"]</h3>
+
+                        <table class="table table-bordered text-center">
+                            <tr>
+                                <th>Mã Hóa Đơn</th>
+                                <th>Ngày đặt</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Action</th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.InvoiceID</td>
+                                    <td>@item.DateInvoice</td>
+                                    <td>@item.Total_Bill</td>
+                                    <td>
+                                        @if (item.Status == 0)
+                                        {
+                                            <span class="label label-primary">Chờ xác nhận</span>
+                                        }
+                                        else if (item.Status == 1)
+                                        {
+                                            <span class="label label-warning">Đang giao hàng</span>
+                                        }
+                                        else if (item.Status == 2)
+                                        {
+                                            <span class="label label-success">Đã giao hàng</span>
+                                        }
+                                        else if (item.Status == 3)
+                                        {
+                                            <span class="label label-danger">Đã hủy</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Chỉnh sửa", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-edit" })
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div><!-- /.table-responsive -->
+                </div><!-- /.box-body -->
+                <!--<div class="box-footer clearfix">
+                    <h2 class="pull-right">Tổng Chi Tiết Hóa Đơn: @TempData["OrderTotal"]</h2>
+                </div>-->
+                <!-- /.box-footer -->
+            </div><!-- /.box -->
+        </div>
+</div>
+    </section>
+</div>

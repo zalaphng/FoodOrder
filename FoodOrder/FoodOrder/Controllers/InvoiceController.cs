@@ -16,17 +16,33 @@ namespace FoodOrder.Models
         // GET: Invoice/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                InvoiceModels invoiceModels = db.InvoiceModels.Find(id);
+                if (invoiceModels == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.FKUserID = new SelectList(db.Users, "userid", "Name", invoiceModels.FKUserID);
+                return View(invoiceModels);
             }
-            InvoiceModels invoiceModels = db.InvoiceModels.Find(id);
-            if (invoiceModels == null)
+            else
             {
-                return HttpNotFound();
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
             }
-            ViewBag.FKUserID = new SelectList(db.Users, "userid", "Name", invoiceModels.FKUserID);
-            return View(invoiceModels);
         }
 
         // POST: Invoice/Edit/5
@@ -64,17 +80,33 @@ namespace FoodOrder.Models
         [HttpGet]
         public ActionResult Delete(string id)
         {
-            InvoiceModels invoiceModels = db.InvoiceModels.Find(id);
-            var orders = db.Orders.Where(o => o.FkInvoiceID == id);
-
-            foreach (var order in orders)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
             {
-                db.Orders.Remove(order);
-            }
+                InvoiceModels invoiceModels = db.InvoiceModels.Find(id);
+                var orders = db.Orders.Where(o => o.FkInvoiceID == id);
 
-            db.InvoiceModels.Remove(invoiceModels);
-            db.SaveChanges();
-            return RedirectToAction("ListOfInvoices", "Admin");
+                foreach (var order in orders)
+                {
+                    db.Orders.Remove(order);
+                }
+
+                db.InvoiceModels.Remove(invoiceModels);
+                db.SaveChanges();
+                return RedirectToAction("ListOfInvoices", "Admin");
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -88,13 +120,29 @@ namespace FoodOrder.Models
 
         public ActionResult OrderDetails(string FKInvoiceID)
         {
-            var orders = db.Orders.Include(o => o.Products)
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                var orders = db.Orders.Include(o => o.Products)
                                    .Where(o => o.FkInvoiceID == FKInvoiceID)
                                    .ToList();
-            var invoice = db.InvoiceModels.FirstOrDefault(i => i.InvoiceID == FKInvoiceID);
-            TempData["InvoiceTotal"] = invoice.Total_Bill;                       
+                var invoice = db.InvoiceModels.FirstOrDefault(i => i.InvoiceID == FKInvoiceID);
+                TempData["InvoiceTotal"] = invoice.Total_Bill;
 
-            return View(orders);
+                return View(orders);
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    return RedirectToAction("Index", "Products");
+                }
+                else
+                {
+                    return RedirectToAction("LoginAdmin", "Admin");
+                }
+            }
         }
 
         public ActionResult InvoicesList(string FKUserID)

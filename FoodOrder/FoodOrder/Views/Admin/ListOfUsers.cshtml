@@ -1,0 +1,67 @@
+﻿@model IEnumerable<FoodOrder.Models.Users>
+
+@{
+    ViewBag.Title = "ListOfInvoices";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            List Of Users
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Users</li>
+        </ol>
+    </section>
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Danh sách khách hàng</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                <thead>
+                                    <tr>
+                                        <th>Mã khách hàng</th>
+                                        <th>User Name</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => item.userid)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                        <td>
+                                            @Html.ActionLink("Cập nhật thông tin", "EditUser", "Admin", new { uid = item.userid }, new { @class = "btn btn-primary" })
+                                            @Html.ActionLink("Danh sách hóa đơn", "UserInvoices", "Admin", new { UserID = item.userid }, new { @class = "btn btn-info" })
+                                            <a href="@Url.Action("DeleteUser", "Admin", new { id = item.userid })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này \n *Sẽ xóa tất cả hóa đơn của khách hàng này*?')">Xóa Khách hàng</a>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /.box-body -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+</div>

@@ -21,38 +21,38 @@
     </tr>
     @foreach (var item in Model)
     {
-<tr>
-    <td>@(i++)</td>
-    <td>@item.DateInvoice</td>
-    <td>@item.Total_Bill</td>
-    <td>
-        @if (item.Status == 0)
-        {
-            <span class="badge bg-primary">Chờ xác nhận</span>
-        }
-        else if (item.Status == 1)
-        {
-            <span class="badge bg-warning">Đang giao hàng</span>
-        }
-        else if (item.Status == 2)
-        {
-            <span class="badge bg-success">Đã giao hàng</span>
-        }
-        else if (item.Status == 3)
-        {
-            <span class="badge bg-danger">Đã hủy</span>
-        }
-    </td>
-    <td>
-        @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
-        {
-            var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
-            if (uid == item.FKUserID)
-            {
-                @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs" })
-            }
-        }
-    </td>
-</tr>
+        <tr>
+            <td>@(i++)</td>
+            <td>@item.DateInvoice</td>
+            <td>@item.Total_Bill</td>
+            <td>
+                @if (item.Status == 0)
+                {
+                    <span class="badge bg-primary">Chờ xác nhận</span>
+                }
+                else if (item.Status == 1)
+                {
+                    <span class="badge bg-warning">Đang giao hàng</span>
+                }
+                else if (item.Status == 2)
+                {
+                    <span class="badge bg-success">Đã giao hàng</span>
+                }
+                else if (item.Status == 3)
+                {
+                    <span class="badge bg-danger">Đã hủy</span>
+                }
+            </td>
+            <td>
+                @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
+                {
+                    var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
+                    if (uid == item.FKUserID)
+                    {
+                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs" })
+                    }
+                }
+            </td>
+        </tr>
     }
 </table>
