@@ -9,7 +9,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Edit Product
+            Chỉnh sửa sản phẩm
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -41,21 +41,21 @@
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.id)
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = " " })
+                                    @Html.LabelFor(model => model.ProductName, "Tên sản phẩm", htmlAttributes: new { @class = " " })
 
                                     @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ProductPrice, htmlAttributes: new { @class = " " })
+                                    @Html.LabelFor(model => model.ProductPrice,"Giá sản phẩm", htmlAttributes: new { @class = " " })
 
                                     @Html.EditorFor(model => model.ProductPrice, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.ProductPrice, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ProductPicture, htmlAttributes: new { @class = " " })
+                                    @Html.LabelFor(model => model.ProductPicture,"Ảnh sản phẩm", htmlAttributes: new { @class = " " })
 
                                     <input type="file" name="file" id="file">
                                     @ViewBag.Message
