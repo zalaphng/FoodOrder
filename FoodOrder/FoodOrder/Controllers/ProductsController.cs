@@ -78,6 +78,9 @@ namespace FoodWeb.Controllers
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
+                var productTypes = db.ProductTypes.ToList();
+                SelectList selectList = new SelectList(productTypes, "id", "ProductTypeName");
+                ViewBag.ProductTypes = selectList;
                 return View();
             }
             else
@@ -108,15 +111,23 @@ namespace FoodWeb.Controllers
                     products.ProductPicture = "Images/" + filename;
                     db.Products.Add(products);
                     db.SaveChanges();
+                    TempData["SuccessMessage"] = "Đã thêm thành công!";
+                    return RedirectToAction("ViewProductsAdmin", "Products");
+                    //return View("Index");
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    ViewBag.ErrorMessage = "ERROR:" + ex.Message.ToString();
                 }
             else
             {
+                ViewBag.ErrorMessage = "You have not specified a file.";
                 ViewBag.Message = "You have not specified a file.";
             }
+            // tránh error khi mà file không được tải lên, vì không có viewbag khi load lại view create
+            var productTypes = db.ProductTypes.ToList();
+            SelectList selectList = new SelectList(productTypes, "id", "ProductTypeName");
+            ViewBag.ProductTypes = selectList;
             return View();
         }
 
@@ -127,10 +138,16 @@ namespace FoodWeb.Controllers
             if (adminInCookie != null)
             {
                 Products products = db.Products.Find(id);
+
                 if (products == null)
                 {
                     return HttpNotFound();
                 }
+
+                var productTypes = db.ProductTypes.ToList();
+                SelectList selectList = new SelectList(productTypes, "id", "ProductTypeName", products.FKProductType);
+                ViewBag.ProductTypes = selectList;
+
                 return View(products);
             }
             else
@@ -145,8 +162,8 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-
         }
+
         [HttpPost]
         public ActionResult EditProduct(HttpPostedFileBase file, Products products)
         {
@@ -161,16 +178,32 @@ namespace FoodWeb.Controllers
                     products.ProductPicture = "Images/" + filename;
                     db.Entry(products).State = EntityState.Modified;
                     db.SaveChanges();
+                    TempData["SuccessMessage"] = "Đã sửa thành công!";
+                    return RedirectToAction("ViewProductsAdmin", "Products");
+                    //return View();
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "ERROR:" + ex.Message.ToString();
+                    ViewBag.ErrorMessage = "ERROR:" + ex.Message.ToString();
                 }
             else
             {
-                ViewBag.Message = "You have not specified a file.";
+                var dbProduct = db.Products.Find(products.id);
+                if (dbProduct != null)
+                {
+                    products.ProductPicture = dbProduct.ProductPicture;
+                    db.Entry(dbProduct).State = EntityState.Detached;
+                }
+                db.Entry(products).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ViewProductsAdmin", "Products");
             }
-            return RedirectToAction("ViewProductsAdmin", "Products");
+            // tránh error khi mà file không được tải lên, vì không có viewbag khi load lại view edit
+            var productTypes = db.ProductTypes.ToList();
+            SelectList selectList = new SelectList(productTypes, "id", "ProductTypeName");
+            ViewBag.ProductTypes = selectList;
+            //return RedirectToAction("EditProduct", "Products");
+            return View();
         }
         public ActionResult ViewProductsAdmin()
         {
@@ -382,10 +415,16 @@ namespace FoodWeb.Controllers
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
-                Products products = db.Products.Find(id);
-                db.Products.Remove(products);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Admin");
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Products product = db.Products.Find(id);
+                if (product == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(product);
             }
             else
             {

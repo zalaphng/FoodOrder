@@ -25,3 +25,7 @@ body {
 .email-text {
     color: black;
 }
+
+.fullwidth {
+    width: 100%;
+}
