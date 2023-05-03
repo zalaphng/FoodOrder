@@ -23,6 +23,7 @@
                 <div class="box">
                     <div class="box-header with-border">
                         <h3 class="box-title">Details</h3>
+                        <h3 class="text-success">@TempData["SuccessMessage"]</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -38,20 +39,23 @@
                             </tr>
                             @foreach (var item in Model)
                             {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ProductTypes.ProductTypeName)</td>
-                            <td><span class="label label-success">@Html.DisplayFor(modelItem => item.ProductPrice)</span></td>
-                            <td><img class="product__img img-fluid" sty" width="200" height="200" src="~/@Html.DisplayFor(modelItem => item.ProductPicture)" alt=""></td>
-                            <td>
-                                <button class="btn btn-block btn-success">@Html.ActionLink("Edit", "EditProduct", new { id = item.id }, htmlAttributes: new { @class = "clbtn" })</button>
-                                <button class="btn btn-block btn-info">@Html.ActionLink("Details", "Details", new { id = item.id })</button>
-                                <button class="btn btn-block btn-danger"
-                                        onclick="if (confirm('Are you sure you want to delete this item?')) {window.location.href = '@Url.Action("Delete", "Products", new { id = item.id })';}">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ProductTypes.ProductTypeName)</td>
+                                    <td><span class="label label-success">@Html.DisplayFor(modelItem => item.ProductPrice)</span></td>
+                                    <td><img class="product__img img-fluid" sty" width="200" height="200" src="~/@Html.DisplayFor(modelItem => item.ProductPicture)" alt=""></td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditProduct", new { id = item.id }, new { @class = "btn btn-block btn-success" })
+                                        @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-info btn-block" })
+                                        <p class="btn btn-danger btn-block"
+                                                onclick="if (confirm('Are you sure you want to delete this item?'))
+                                                {
+                                                    window.location.href = '@Url.Action("Delete", "Products", new { id = item.id }  )';
+                                                }">
+                                            Delete
+                                        </p>
+                                    </td>
+                                </tr>
                             }
                         </table>
                     </div><!-- /.box-body -->
