@@ -119,47 +119,47 @@ SET IDENTITY_INSERT [Products] ON
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (1, N'Phin Đá', 20, N'phinda.jpg', 2)
+    (1, N'Phin Đá', 20, N'Images/phinda.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (2, N'Espresso Đá/Sữa Đá', 25, N'espresso', 2)
+    (2, N'Espresso Đá/Sữa Đá', 25, N'Images/espresso', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (3, N'Bạc Xĩu', 25, N'bacxiu.jpg', 2)
+    (3, N'Bạc Xĩu', 25, N'Images/bacxiu.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (4, N'Cà Phê Cốt Dừa', 39, N'caphecotdua.jpg', 2)
+    (4, N'Cà Phê Cốt Dừa', 39, N'Images/caphecotdua.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (5, N'Choco Đá Xây', 39, N'chocodaxay.jpg', 2)
+    (5, N'Choco Đá Xây', 39, N'Images/chocodaxay.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (6, N'Hồng Trà Đào', 25, N'hongtradao.jpg', 2)
+    (6, N'Hồng Trà Đào', 25, N'Images/hongtradao.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (7, N'Soda Chanh Dây', 19, N'sodachanhday.jpg', 2)
+    (7, N'Soda Chanh Dây', 19, N'Images/sodachanhday.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (8, N'Bánh Flan', 20, N'banh-flan-1.jpg', 1)
+    (8, N'Bánh Flan', 20, N'Images/banh-flan-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (9, N'Tiramisu', 55, N'Tiramisu-1.jpg', 1)
+    (9, N'Tiramisu', 55, N'Images/Tiramisu-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (10, N'Macaron', 35, N'macaron-1.jpg', 1)
+    (10, N'Macaron', 35, N'Images/macaron-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (11, N'Chocolate Tart', 60, N'chocolate-tart-1.jpg', 1)
+    (11, N'Chocolate Tart', 60, N'Images/chocolate-tart-1.jpg', 1)
 SET IDENTITY_INSERT [Products] OFF
 
 -- Khách hàng
