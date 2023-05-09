@@ -106,11 +106,11 @@ SET IDENTITY_INSERT [ProductTypes] ON
 INSERT INTO [ProductTypes]
     ([id], [ProductTypeName])
 VALUES
-    (1, N'Foots')
+    (1, N'Đồ ăn')
 INSERT INTO [ProductTypes]
     ([id], [ProductTypeName])
 VALUES
-    (2, N'Drinks')
+    (2, N'Đồ uống')
 SET IDENTITY_INSERT [ProductTypes] OFF
 
 -- Hàng hóa
