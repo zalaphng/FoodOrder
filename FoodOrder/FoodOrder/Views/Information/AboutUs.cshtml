@@ -3,6 +3,29 @@
     ViewBag.Title = "AboutUs";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    main {
+        background: #BCE29E;
+    }
+    .font--regular1{
+        font-weight:bolder;
+        margin-top:20%;
+        padding-bottom:5%;
+        text-align:center;
+    }
+    .font--regular {
+        text-align: center;
+    }
+    .open {
+        text-align: right;
+        padding-top: 40%;
+        font-weight: bold;
+    }
+    .Close {
+        text-align: right;
+        font-weight: bold;
+    }
+</style>
 <main id="main-container" class="main-container">
     <div class="about-top">
         <div class="container">
@@ -10,13 +33,16 @@
                 <div class="col-md-6">
                     <div class="about-img">
                         <div class="img-responsive">
-                            <img src="~/Content/assets/img/about/about.png" />
+                            <img src="~/Content/assets/img/about/about.jpg" />
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="about-content">
-                        <h4 class="font--regular">We Are A Gsore Focused On Delivering Best Organic Food And User Experiences.</h4>
+                        <h1 class="font--regular1">Hôm Nào Coffee</h1>
+                        <h3 class="font--regular">We are beverage and dessert delivery service. Always ensure the best customer service.</h3>
+                        <h4 class="open">Openning 6h AM</h4>
+                        <h4 class="Close">Closing 10h PM</h4>
                         <p class="para__text"></p>
                         <a href="#" class="btn btn--icon-left btn--small btn--radius btn--transparent btn--border-green btn--border-green-hover-green font--regular text-capitalize m-t-20">Download Our App<i class="fal fa-angle-right"></i></a>
                     </div>
