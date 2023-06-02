@@ -40,12 +40,12 @@
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
-            <b class="logo">@Html.ActionLink("Control Panel", "Index", "Admin")</b>
+            <b class="logo">@Html.ActionLink("Danh mục xử lý", "Index", "Admin")</b>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only">Thanh chuyển đổi</span>
                 </a>
                 @{
                     var adminInCookie = Request.Cookies["AdminInfo"];
@@ -55,7 +55,7 @@
                     string email = string.Empty;
                     email = adminInCookie["Email"].ToString();
                     <span style="font-size: 17px; font-weight: bold; margin-left: 50px; color: #fff;">@email</span>
-                    <a href="@Url.Action("Index","Home")" style="float:right; font-size:18px; font-weight: bold; margin-right: 20px; margin-top: 12px;">Food Home</a>
+                    <a href="@Url.Action("Index","Home")" style="float:right; font-size:18px; font-weight: bold; margin-right: 20px; margin-top: 12px;">Trang chủ</a>
                     <a href="@Url.Action("LogoutAdmin","Admin")" style="float:right; font-size:18px; font-weight: bold; margin-right: 50px; margin-top: 12px;">Đăng xuất</a>
                 }
                 else
@@ -78,13 +78,13 @@
                     <div class="pull-left info">
                         <p>Admin</p>
 
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        <a href="#"><i class="fa fa-circle text-success"></i>Trực tuyến</a>
                     </div>
                 </div>
 
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li class="header">MAIN NAVIGATION</li>
+                    <li class="header">Hướng dẫn chính</li>
                     <li class="active treeview">
                         <a href="@Url.Action("Index","Admin")">
                             <i class="fa fa-home"></i> <span>Trang chủ</span>

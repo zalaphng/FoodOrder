@@ -22,7 +22,7 @@
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Latest Messages</h3>
+                        <h3 class="box-title">Hòm thư gần đây</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -49,8 +49,8 @@
                                             <td>@Html.DisplayFor(modelItem => item.Message)</td>
                                             <td>
                                                 <button class="btn btn-block btn-danger"
-                                                        onclick="if (confirm('Are you sure you want to delete this item?')) {window.location.href = '@Url.Action("Delete", "Information", new { id = item.contactId })';}">
-                                                    Delete
+                                                        onclick="if (confirm('bạn có chắc bạn muốn xóa tin nhắn này ?')) {window.location.href = '@Url.Action("Delete", "Information", new { id = item.contactId })';}">
+                                                    Xóa
                                                 </button>
                                             </td>
                                         </tr>
