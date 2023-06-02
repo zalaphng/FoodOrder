@@ -55,6 +55,17 @@ CREATE TABLE [Users]
     CONSTRAINT [PK_dbo.Users] PRIMARY KEY CLUSTERED ([userid])
 );
 
+CREATE TABLE [Favourites]
+(
+    [FavouriteId] INT IDENTITY (1, 1) NOT NULL,
+    [UserId] NVARCHAR(6) NOT NULL,
+    [ProductId] INT NOT NULL,
+    [CreateAt] DATE NOT NULL,
+    CONSTRAINT [PK_dbo.Favourites] PRIMARY KEY ([FavouriteId]),
+    CONSTRAINT [FK_dbo.Favourites_dbo.Users_FKUserID] FOREIGN KEY ([UserID]) REFERENCES [Users] ([userid]),
+    CONSTRAINT [FK_dbo.Favourites_dbo.Products_FKProductID] FOREIGN KEY ([ProductID]) REFERENCES [Products] ([id])
+);
+
 
 CREATE TABLE [InvoiceModels]
 (
@@ -122,7 +133,7 @@ VALUES
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (2, N'Espresso Đá/Sữa Đá', 25, N'Images/espresso', 2)
+    (2, N'Espresso Đá/Sữa Đá', 25, N'Images/espresso.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
@@ -167,15 +178,15 @@ SET IDENTITY_INSERT [Products] OFF
 INSERT INTO [Users]
     ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
 VALUES
-    ('U00001', N'User 1', N'user@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
+    ('U00001', N'Nguyễn Văn A', N'user@gmail.com', N'5d9c68c6c50ed3d02a2fcf54f63993b6', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
 INSERT INTO [Users]
     ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
 VALUES
-    ('U00002', N'User 2', N'user2@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
+    ('U00002', N'Nguyễn Văn B', N'user2@gmail.com', N'5d9c68c6c50ed3d02a2fcf54f63993b6', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
 INSERT INTO [Users]
     ([userid], [Name], [Email], [Password], [ConfirmPassword], [Address], [PhoneNumber])
 VALUES
-    ('U00003', N'User 3', N'user3@gmail.com', N'testuser', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
+    ('U00003', N'Nguyễn Văn C', N'user3@gmail.com', N'5d9c68c6c50ed3d02a2fcf54f63993b6', N'5d9c68c6c50ed3d02a2fcf54f63993b6', 'ABC', '0219481249')
 
 
 -- Hóa Đơn

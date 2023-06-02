@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FoodOrderDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FoodOrderDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AdminLogins">
           <Key>
             <PropertyRef Name="adminid" />
@@ -22,6 +22,15 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Favourites">
+          <Key>
+            <PropertyRef Name="FavouriteId" />
+          </Key>
+          <Property Name="FavouriteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="6" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="CreateAt" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="InvoiceModels">
           <Key>
@@ -74,6 +83,30 @@
           <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="FK_dbo_Favourites_dbo_Products_FKProductID">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Favourites" Type="Self.Favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Favourites">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Favourites_dbo_Users_FKUserID">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Favourites" Type="Self.Favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Favourites">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_InvoiceModels_dbo_Users_FKUserID">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="InvoiceModels" Type="Self.InvoiceModels" Multiplicity="*" />
@@ -125,11 +158,20 @@
         <EntityContainer Name="FoodOrderDBModelStoreContainer">
           <EntitySet Name="AdminLogins" EntityType="Self.AdminLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ContactModels" EntityType="Self.ContactModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Favourites" EntityType="Self.Favourites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InvoiceModels" EntityType="Self.InvoiceModels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTypes" EntityType="Self.ProductTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Favourites_dbo_Products_FKProductID" Association="Self.FK_dbo_Favourites_dbo_Products_FKProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Favourites" EntitySet="Favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Favourites_dbo_Users_FKUserID" Association="Self.FK_dbo_Favourites_dbo_Users_FKUserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Favourites" EntitySet="Favourites" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_InvoiceModels_dbo_Users_FKUserID" Association="Self.FK_dbo_InvoiceModels_dbo_Users_FKUserID">
             <End Role="Users" EntitySet="Users" />
             <End Role="InvoiceModels" EntitySet="InvoiceModels" />
@@ -147,8 +189,7 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FoodOrderDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -207,6 +248,7 @@
           <Property Name="FKProductType" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_dbo_Orders_dbo_Products_FkProdId" FromRole="Products" ToRole="Orders" />
           <NavigationProperty Name="ProductTypes" Relationship="Self.FK_dbo_Products_dbo_ProductTypes" FromRole="Products" ToRole="ProductTypes" />
+          <NavigationProperty Name="Favourites" Relationship="FoodOrderDBModel.FK_dbo_Favourites_dbo_Products_FKProductID" FromRole="Products" ToRole="Favourites" />
         </EntityType>
         <EntityType Name="ProductTypes">
           <Key>
@@ -228,6 +270,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="PhoneNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="InvoiceModels" Relationship="Self.FK_dbo_InvoiceModels_dbo_Users_FKUserID" FromRole="Users" ToRole="InvoiceModels" />
+          <NavigationProperty Name="Favourites" Relationship="FoodOrderDBModel.FK_dbo_Favourites_dbo_Users_FKUserID" FromRole="Users" ToRole="Favourites" />
         </EntityType>
         <Association Name="FK_dbo_InvoiceModels_dbo_Users_FKUserID">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
@@ -301,8 +344,52 @@
             <End Role="ProductTypes" EntitySet="ProductTypes" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="Favourites" EntityType="FoodOrderDBModel.Favourites" />
+          <AssociationSet Name="FK_dbo_Favourites_dbo_Products_FKProductID" Association="FoodOrderDBModel.FK_dbo_Favourites_dbo_Products_FKProductID">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Favourites" EntitySet="Favourites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Favourites_dbo_Users_FKUserID" Association="FoodOrderDBModel.FK_dbo_Favourites_dbo_Users_FKUserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Favourites" EntitySet="Favourites" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Favourites">
+          <Key>
+            <PropertyRef Name="FavouriteId" />
+          </Key>
+          <Property Name="FavouriteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="CreateAt" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Products" Relationship="FoodOrderDBModel.FK_dbo_Favourites_dbo_Products_FKProductID" FromRole="Favourites" ToRole="Products" />
+          <NavigationProperty Name="Users" Relationship="FoodOrderDBModel.FK_dbo_Favourites_dbo_Users_FKUserID" FromRole="Favourites" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_dbo_Favourites_dbo_Products_FKProductID">
+          <End Type="FoodOrderDBModel.Products" Role="Products" Multiplicity="1" />
+          <End Type="FoodOrderDBModel.Favourites" Role="Favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Favourites">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Favourites_dbo_Users_FKUserID">
+          <End Type="FoodOrderDBModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="FoodOrderDBModel.Favourites" Role="Favourites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Favourites">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -381,6 +468,16 @@
                 <ScalarProperty Name="ConfirmPassword" ColumnName="ConfirmPassword" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Favourites">
+            <EntityTypeMapping TypeName="FoodOrderDBModel.Favourites">
+              <MappingFragment StoreEntitySet="Favourites">
+                <ScalarProperty Name="CreateAt" ColumnName="CreateAt" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FavouriteId" ColumnName="FavouriteId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

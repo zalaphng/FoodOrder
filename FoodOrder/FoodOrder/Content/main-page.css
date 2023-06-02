@@ -1,4 +1,4 @@
-.header__user-action-icon li a {
+﻿.header__user-action-icon li a {
     color: #00522D;
 }
 
@@ -13,4 +13,128 @@ header__nav-item-custom {
     line-height: 60px;
 }
 
+.product__img-box {
+}
 
+.product__img-box .product__img {
+    width: 100%;
+    height: 261px;
+    object-fit: cover;
+}
+
+.header .header__top-content {
+    font-family: 'Rubik-VH-Regular';
+    font-size: 15px;
+}
+
+@font-face {
+    font-family: 'Rubik-VH-Bold';
+    src: url('./override/font/DVN-Rubik/Rubik-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Rubik-VH-Regular';
+    src: url('./override/font/DVN-Rubik/Rubik-Regular.ttf') format('truetype');
+}
+
+header, footer {
+    font-family: Rubik-VH-Bold, sans-serif !important;
+}
+
+body {
+    font-family: Rubik-VH-Regular, sans-serif !important;
+}
+
+.header-menu .header__nav .header__nav-item {
+    font-size: 15px!important;
+}
+
+.section-content__title .tablist {
+    font-family: Rubik-VH-Bold, sans-serif;
+    font-size: 16px!important;
+    font-weight: bold;
+}
+
+.header__user-action-icon .header__nav-item {
+    font-family: Rubik-VH-Regular, sans-serif !important;
+}
+
+.title__hero {
+    color: white;
+    text-shadow: 8px 4px 4px rgba(0, 0, 0, 1);
+    padding: 5px 10px;
+    font-weight: bold;
+}
+
+.title__hero--tiny {
+    font-size: 18px !important;
+}
+
+.header-search__content {
+    position: relative;
+}
+
+    .header-search__content input[type="search"] {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .header-search__content button {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+#search-results {
+    display: none;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 662px;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    padding: 10px;
+}
+
+
+    #search-results.show {
+        display: block;
+    }
+
+    #search-results .show {
+        display: block;
+    }
+
+    #search-results a {
+        display: block;
+        text-decoration: none;
+        height: 50px; 
+        padding: 16px;
+    }
+
+    #search-results a:first-child {
+        border-bottom: 1px solid #ccc;
+    }
+
+    #search-results a:hover,
+    #search-results a:hover span
+    {
+        color: red;
+    }
+
+    .remove-heart {
+        background: red!important;
+    }
+
+    .btn-edit {
+        padding: 5px;
+        border: 15px;
+    }

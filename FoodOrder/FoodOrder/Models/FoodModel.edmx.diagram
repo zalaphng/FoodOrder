@@ -16,7 +16,10 @@
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Orders_dbo_InvoiceModels_FkInvoiceID" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Orders_dbo_Products_FkProdId" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Products_dbo_ProductTypes" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="FoodOrderDBModel.Favourites" Width="1.5" PointX="8.25" PointY="4.375" />
+        <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Favourites_dbo_Products_FKProductID" />
+        <AssociationConnector Association="FoodOrderDBModel.FK_dbo_Favourites_dbo_Users_FKUserID" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
