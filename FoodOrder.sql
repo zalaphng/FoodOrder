@@ -2,8 +2,6 @@ USE master
 DROP DATABASE FoodOrderDB
 GO
 
-TEST
-
 CREATE DATABASE FoodOrderDB
 GO
 USE FoodOrderDB
