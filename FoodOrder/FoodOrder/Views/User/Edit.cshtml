@@ -36,27 +36,27 @@
                         @Html.HiddenFor(model => model.UserId)
                         <form>
                             <div class="form-box__single-group">
-                                <label for="form-register-username">Name *</label>
+                                <label for="form-register-username">Họ và tên *</label>
                                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-box__single-group">
-                                <label for="form-uregister-sername-email">Email address *</label>
+                                <label for="form-uregister-sername-email">Tài khoản Email *</label>
                                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-box__single-group m-b-20">
-                                <label for="form-register-phonenumber">Address *</label>
+                                <label for="form-register-phonenumber">Địa chỉ *</label>
                                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                             </div>
                             <div class="form-box__single-group m-b-20">
-                                <label for="form-register-phonenumber">Phone Number *</label>
+                                <label for="form-register-phonenumber">Số điện thoại *</label>
                                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                             </div>
 
-                            <button class="btn btn--box btn--medium btn--radius btn--black btn--black-hover-green btn--uppercase font--semi-bold" type="submit">SAVE</button>
+                            <button class="btn btn--box btn--medium btn--radius btn--black btn--black-hover-green btn--uppercase font--semi-bold" type="submit">Lưu</button>
                         </form>
                     </div>
                     }

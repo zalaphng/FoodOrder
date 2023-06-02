@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-content m-b-40">
-                    <h5 class="section-content__title text-center">Register</h5>
+                    <h5 class="section-content__title text-center">Đăng ký tài khoản</h5>
                 </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -24,18 +24,18 @@
                             <div class="text-danger">@ViewBag.Message</div>
                             <form>
                                 <div class="form-box__single-group">
-                                    <label for="form-register-username">Name *</label>
+                                    <label for="form-register-username">Họ và tên *</label>
                                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-box__single-group">
-                                    <label for="form-uregister-sername-email">Email address *</label>
+                                    <label for="form-uregister-sername-email">Địa chỉ Email *</label>
                                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                                 </div>
                                 <div class="form-box__single-group m-b-20">
-                                    <label for="form-register-username-password">Password *</label>
+                                    <label for="form-register-username-password">Mật khẩu *</label>
                                     <div class="password__toggle">
                                         @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @id = "form-register-username-password" } })
                                         <span data-toggle="#form-register-username-password" class="password__toggle--btn fa fa-fw fa-eye"></span>
@@ -43,7 +43,7 @@
                                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-box__single-group m-b-20">
-                                    <label for="form-register-username-password">Confirm Password *</label>
+                                    <label for="form-register-username-password">Nhập lại mật khẩu *</label>
                                     <div class="password__toggle">
                                         @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @id = "form-register-username-confrm-password" } })
                                         <span data-toggle="#form-register-username-confrm-password" class="password__toggle--btn fa fa-fw fa-eye"></span>
@@ -52,22 +52,22 @@
                                 </div>
 
                                 <div class="form-box__single-group m-b-20">
-                                    <label for="form-register-phonenumber">Address *</label>
+                                    <label for="form-register-phonenumber">Địa chỉ *</label>
                                     @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-box__single-group m-b-20">
-                                    <label for="form-register-phonenumber">Phone Number *</label>
+                                    <label for="form-register-phonenumber">Số Điện thoại *</label>
                                     @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                                     @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                                 </div>
 
-                                <button class="btn btn--box btn--medium btn--radius btn--black btn--black-hover-green btn--uppercase font--semi-bold" type="submit">REGISTER</button>
+                                <button class="btn btn--box btn--medium btn--radius btn--black btn--black-hover-green btn--uppercase font--semi-bold" type="submit">Đăng ký</button>
                             </form>
                         </div>
                     }
                     <br>
-                    <a class="link--gray" href="@Url.Action("Login","User")">If you already registered? Login Here.</a>
+                    <a class="link--gray" href="@Url.Action("Login","User")">Nếu bạn đã đăng ký? Đăng nhập tại đây.</a>
                 </div>
             </div>
         </div>

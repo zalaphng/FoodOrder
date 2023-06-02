@@ -18,12 +18,12 @@
                         <table>
                             <thead class="gray-bg">
                                 <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Until Price</th>
-                                    <th>Qty</th>
-                                    <th>Subtotal</th>
-                                    <th>Action</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Tên đồ uống</th>
+                                    <th>Số tiền</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,18 +56,18 @@
                     <!-- Start Cart Table Button -->
                     <div class="cart-table-button m-t-10">
                         <div class="cart-table-button--left">
-                            <a href="/Products/Index" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--bold m-t-20">CONTINUE SHOPPING</a>
+                            <a href="/Products/Index" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--bold m-t-20">Tiếp tục mua hàng</a>
                         </div>
                         <div class="cart-table-button--right d-flex">
                             @if (TempData["cart"] != null)
                             {
                                 <button class="btn btn--box btn--large btn--radius btn--black btn--black-hover-green btn--uppercase font--bold m-t-20 m-r-20"
-                                        onclick="if (confirm('Are you sure you want to clear cart?')) {window.location.href = '@Url.Action("clearCart", "Products")';}">
-                                    Clear Shopping Cart
+                                        onclick="if (confirm('Bạn có chắc chắn muốn xóa giỏ hàng?')) {window.location.href = '@Url.Action("clearCart", "Products")';}">
+                                    Xóa giỏ hàng
                                 </button>
                                 using (Html.BeginForm())
                                 {
-                                    <input type="submit" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--bold m-t-20 m-r-20" value="PLACE ORDER">
+                                    <input type="submit" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--bold m-t-20 m-r-20" value="Đặt hàng">
                                 }
                             }
                         </div>
