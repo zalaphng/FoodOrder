@@ -228,15 +228,15 @@ VALUES
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (7, 3, 25, 75, N'2020-12-31 19:15:53', 28, 'I00004')
+    (7, 3, 25, 75, N'2020-12-31 19:15:53', 10, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (8, 2, 55, 110, N'2020-12-31 19:15:53', 30, 'I00004')
+    (8, 2, 55, 110, N'2020-12-31 19:15:53', 11, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (9, 5, 50, 250, N'2020-12-31 19:15:53', 29, 'I00004')
+    (9, 5, 50, 250, N'2020-12-31 19:15:53', 9, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
