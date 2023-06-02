@@ -184,6 +184,9 @@
     <Compile Include="Models\AdminLogins.cs">
       <DependentUpon>FoodModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Favourites.cs">
+      <DependentUpon>FoodModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OtherModels\AppFoodDbContext.cs" />
     <Compile Include="Models\OtherModels\Cart.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
@@ -331,6 +334,7 @@
     <Content Include="Content\assets\img\product\size-small\product-home-1-img-1.jpg" />
     <Content Include="Content\assets\img\product\size-small\product-home-1-img-2.jpg" />
     <Content Include="Content\assets\img\product\size-small\product-home-1-img-3.jpg" />
+    <Content Include="Content\assets\img\slider-image1.jpg" />
     <Content Include="Content\assets\img\testimonial\testimonial-home-1-img-1.png" />
     <Content Include="Content\assets\img\testimonial\testimonial-home-1-img-2.png" />
     <Content Include="Content\assets\img\testimonial\testimonials-bg.jpg" />
@@ -406,6 +410,8 @@
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\main-admin.css" />
+    <Content Include="Content\override\font\DVN-Rubik\Readme.txt" />
+    <Content Include="Content\override\home.js" />
     <Content Include="Content\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\plugins\bootstrap-slider\slider.css" />
     <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
@@ -909,6 +915,7 @@
     <Content Include="Images\product-home-1-img-3.jpg" />
     <Content Include="Images\product-home-1-img-6.jpg" />
     <Content Include="Images\redmeat.jpg" />
+    <Content Include="Content\assets\img\slider-image2.jpg" />
     <Content Include="Images\tomato.jpg" />
     <Content Include="Models\FoodModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1019,6 +1026,8 @@
     <Content Include="Models\FoodModel.edmx.diagram">
       <DependentUpon>FoodModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\override\font\DVN-Rubik\Rubik-Bold.ttf" />
+    <Content Include="Content\override\font\DVN-Rubik\Rubik-Regular.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1090,6 +1099,8 @@
     <Content Include="Views\Admin\UserInvoices.cshtml" />
     <Content Include="Views\Products\IndexByProductType.cshtml" />
     <Content Include="Views\Admin\EditUserPassword.cshtml" />
+    <Content Include="Views\Products\IndexByProductName.cshtml" />
+    <Content Include="Views\Products\Wishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

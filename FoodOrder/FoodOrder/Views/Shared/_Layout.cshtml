@@ -109,11 +109,11 @@
                                             @if (usersInCookie != null)
                                             {
                                                 string user_id = userInCookie["idUser"].ToString();
-                                                <a href="@Url.Action("InvoicesList", "Invoice", new { FKUserID = user_id })" class="header__nav-link">Kiểm tra</a>
+                                                <a href="@Url.Action("InvoicesList", "Invoice", new { FKUserID = user_id })" class="header__nav-link">Đơn hàng</a>
                                             }
                                             else
                                             {
-                                                <a href="@Url.Action("Login", "User")" class="header__nav-link">Kiểm tra</a>
+                                                <a href="@Url.Action("Login", "User")" class="header__nav-link">Đơn hàng</a>
                                             }
                                         </li>
 
@@ -121,12 +121,12 @@
                                         <!-- End Single Nav link-->
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative">
-                                            <a href="/Information/AboutUs" class="header__nav-link">Thông tin quán</a>
+                                            <a href="/Information/AboutUs" class="header__nav-link">Thông tin</a>
 
                                         </li> <!-- End Single Nav link-->
                                         <!--Start Single Nav link-->
                                         <li class="header__nav-item pos-relative">
-                                            <a href="/Information/ContactUs" class="header__nav-link">Liên hệ với chúng tôi</a>
+                                            <a href="/Information/ContactUs" class="header__nav-link">Liên hệ</a>
 
                                         </li> <!-- End Single Nav link-->
                                     </ul>
@@ -141,13 +141,19 @@
                                     User_name = userInCookie["FullName"].ToString();
                                     string user_id = userInCookie["idUser"].ToString();
                                     @*<li class="header__nav-item pos-relative"><a class="header__nav-link" style="text-transform: none" href="@Url.Action("Edit", "User", new { uid = user_id })">@User_name</a></li>*@
-                                    
+
                                     <li class="header__nav-item dropdown pos-relative">
                                         <button class="header__nav-item-custom dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-transform: none">@User_name</button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="@Url.Action("Edit", "User", new { uid = user_id })">Chỉnh sửa thông tin</a>
-                                            <a class="dropdown-item" href="@Url.Action("ChangePassword", "User", new { uid = user_id })">Thay đổi mật khẩu</a>
+                                            <a class="dropdown-item" href="@Url.Action("Edit", "User", new { uid = user_id })">Edit</a>
+                                            <a class="dropdown-item" href="@Url.Action("ChangePassword", "User", new { uid = user_id })">Change Password</a>
+                                            <a class="dropdown-item" href="@Url.Action("Logout", "User", new { uid = user_id })">Log Out</a>
                                         </div>
+                                    </li>
+                                    <li class="header__nav-item" style="margin-right: -8px;">
+                                        <a href="@Url.Action("Wishlist", "Products", new { userID = user_id })">
+                                            <i class="icon-heart"></i>
+                                        </a>
                                     </li>
                                 }
                                 else
@@ -197,13 +203,17 @@
                         <div class="col-xl-7 col-lg-6">
                             <form class="header-search" action="#" method="post">
                                 <div class="header-search__content pos-relative">
-                                    <input type="search" name="header-search" placeholder="Tìm kiếm" required>
+                                    <input type="search" id="search-input" name="header-search" placeholder="Search our store" required>
                                     <button class="pos-absolute" type="submit"><i class="icon-search"></i></button>
                                 </div>
                             </form>
+                            <div id="search-results">
+                                <a id="default-search-result" href="#">Tìm kiếm <span id="search-term"></span> trong shop</a>
+                            </div>
                         </div>
+
                         <div class="col-xl-2 col-lg-3">
-                            <div class="header-phone text-right"><span>SĐT: 3347 860477</span></div>
+                            <div class="header-phone text-right"><span>Call Us: 012 3456789</span></div>
                         </div>
                     </div>
                 </div>
@@ -336,9 +346,9 @@
                                     </a>
                                 </div>
                                 <ul class="footer__address">
-                                    <li class="footer__address-item"><i class="fa fa-home"></i>19 Tháng 5, Nha Trang, Vietnam</li>
-                                    <li class="footer__address-item"><i class="fa fa-phone-alt"></i>+92 334 786 0477</li>
-                                    <li class="footer__address-item"><i class="fa fa-envelope"></i>support@drinkonline.com</li>
+                                    <li class="footer__address-item"><i class="fa fa-home"></i>Zalaphng</li>
+                                    <li class="footer__address-item"><i class="fa fa-phone-alt"></i>+84 012 345 6789</li>
+                                    <li class="footer__address-item"><i class="fa fa-envelope"></i>support@zalaphng.info</li>
                                 </ul>
                                 <ul class="footer__social-nav">
                                     <li class="footer__social-list"><a href="#" class="footer__social-link"><i class="fab fa-facebook-f"></i></a></li>
@@ -403,6 +413,7 @@
     <script src="~/Content/assets/js/plugin/plugins.min.js"></script> -->
     <!-- Main js file that contents all jQuery plugins activation. -->
     <script src="~/Content/assets/js/main.js"></script>
+    <script src="~/Content/override/home.js"></script>
 </body>
 
 </html>
