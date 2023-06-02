@@ -11,13 +11,11 @@
             <div class="col-12">
                 <!-- Start Section Title -->
                 @*<div class="section-content section-content--border m-b-35">
-                    <h5 class="section-content__title">Categories</h5>
-                    <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
-                        <li><a class="nav-link active" data-toggle="tab" href="#fruits">Fruites</a></li>
-                    </ul>
-                </div>*@
-
-
+                        <h5 class="section-content__title">Categories</h5>
+                        <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
+                            <li><a class="nav-link active" data-toggle="tab" href="#fruits">Fruites</a></li>
+                        </ul>
+                    </div>*@
 
                 <div class="section-content section-content--border m-b-35">
                     <h5 class="section-content__title">Categories</h5>
@@ -38,33 +36,26 @@
 
                 <!-- Dropdown Test -->
                 @*<div class="section-content section-content--border m-b-35">
-                    <h5 class="section-content__title">Categories</h5>
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle tablist tablist--style-blue tablist--style-gap-20 nav active" style="color: #89c74a; font-size: 16px; font-weight: 400" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @ViewBag.ProductTypes[0].ProductTypeName
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-left ml-auto" aria-labelledby="dropdownMenuButton">
-                            @foreach (var productType in ViewBag.ProductTypes)
-                            {
-                                if (productType.id != 0)
+                        <h5 class="section-content__title">Categories</h5>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle tablist tablist--style-blue tablist--style-gap-20 nav active" style="color: #89c74a; font-size: 16px; font-weight: 400" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @ViewBag.ProductTypes[0].ProductTypeName
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-left ml-auto" aria-labelledby="dropdownMenuButton">
+                                @foreach (var productType in ViewBag.ProductTypes)
                                 {
-                                    <a class="dropdown-item" href="@Url.Action("IndexByProductType", "Products", new { id = productType.id })">@productType.ProductTypeName</a>
+                                    if (productType.id != 0)
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("IndexByProductType", "Products", new { id = productType.id })">@productType.ProductTypeName</a>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
-                    </div>
-                </div>*@
+                    </div>*@
 
                 <!-- End Section Title -->
             </div>
         </div>
-        @if (TempData["SuccessMsg"] != null)
-        {
-            <div class="alert alert-success text-bold">
-                @TempData["SuccessMsg"]
-            </div>
-        }
-
         <div class="row">
             <div class="col-12">
                 <div class="tab-content tab-animate-zoom">
@@ -85,35 +76,13 @@
                                             <ul class="product__action--link pos-absolute">
                                                 <li><a href="@Url.Action("addToCart", new { id = item.id })" data-toggle="modal"><i class="icon-shopping-cart"></i></a></li>
 
-                                                @{
-                                                    var usersInCookie = Request.Cookies["UserInfo"];
-                                                }
-                                                @if (usersInCookie != null)
-                                                {
-                                                    string user_id = usersInCookie["idUser"].ToString();
-
-                                                    <li class="header__nav-item" style="margin-right: -8px;">
-                                                        <a href="javascript:void(0);" onclick="addToWishlist('@item.id', '@user_id')">
-                                                            <i class="icon-heart"></i>
-                                                        </a>
-                                                    </li>
-
-                                                }
-                                                else
-                                                {
-                                                    <li>
-                                                        <a href="#" onclick="alert('Chưa đăng nhập');">
-                                                            <i class="icon-heart"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-
+                                                <li><a href="#"><i class="icon-heart"></i></a></li>
 
                                             </ul> <!-- End Product Action Link -->
                                         </div> <!-- End Product Image -->
                                         <!-- Start Product Content -->
                                         <div class="product__content m-t-20">
-                                            <a href="@Url.Action("addToCart", new { id = item.id })" class="product__link">@Html.DisplayFor(modelItem => item.ProductName)</a>
+                                            <a href="product-single-default.html" class="product__link">@Html.DisplayFor(modelItem => item.ProductName)</a>
                                             <div class="product__price m-t-5">
                                                 <span class="product__price">$@Html.DisplayFor(modelItem => item.ProductPrice)</span>
                                             </div>

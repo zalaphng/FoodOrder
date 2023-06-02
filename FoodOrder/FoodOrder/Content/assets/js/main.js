@@ -553,23 +553,23 @@
     /****************************
     * Google Map - Location
     *****************************/
-   //function init() {
-   // var mapOptions = {
-   //     zoom: 11,
-   //     scrollwheel: false,
-   //     center: new google.maps.LatLng(40.709896, -73.995481),
-   // };
-   // var mapElement = document.getElementById('map');
-   // var map = new google.maps.Map(mapElement, mapOptions);
-   // var marker = new google.maps.Marker({
-   //     position: new google.maps.LatLng(40.709896, -73.995481),
-   //     map: map,
-   //     icon: 'assets/img/icon/map-point.png',
-   //     animation:google.maps.Animation.BOUNCE,
-   //     title: 'Snazzy!'
-   // });
-   // }
-   // google.maps.event.addDomListener(window, 'load', init);
+   function init() {
+    var mapOptions = {
+        zoom: 11,
+        scrollwheel: false,
+        center: new google.maps.LatLng(40.709896, -73.995481),
+    };
+    var mapElement = document.getElementById('map');
+    var map = new google.maps.Map(mapElement, mapOptions);
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(40.709896, -73.995481),
+        map: map,
+        icon: 'assets/img/icon/map-point.png',
+        animation:google.maps.Animation.BOUNCE,
+        title: 'Snazzy!'
+    });
+    }
+    google.maps.event.addDomListener(window, 'load', init);
 
 
 

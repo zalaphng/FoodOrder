@@ -24,38 +24,6 @@ namespace FoodWeb.Controllers
             return newId;
         }
 
-
-        [HttpGet]
-        public ActionResult SearchProducts(string searchTerm)
-        {
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                var products = db.Products
-                    .Where(p => p.ProductName.Contains(searchTerm))
-                    .Select(p => new
-                    {
-                        Name = p.ProductName,
-                        Id = p.id
-                    })
-                    .ToList();
-
-                var result = products.Select(p => new
-                {
-                    Name = p.Name,
-                    Url = Url.Action("addToCart", "Products", new { id = p.Id })
-                });
-
-                return Json(result, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(null, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-
-
-
         // GET: Products
         public ActionResult Index()
         {
@@ -79,83 +47,6 @@ namespace FoodWeb.Controllers
             ViewBag.NowId = id;
             return View(products);
         }
-
-        [HttpGet]
-        public ActionResult IndexByProductName(string searchTerm)
-        {
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                return View();
-            }
-
-            var productTypes = db.ProductTypes.ToList();
-            productTypes.Insert(0, new ProductTypes(0, "All"));
-
-            var products = db.Products
-                .Where(p => p.ProductName.Contains(searchTerm))
-                .ToList();
-
-            if (products.Count == 0)
-            {
-                ViewBag.ErrorMessage = "Không có sản phẩm có tên " + searchTerm;
-            }
-
-            ViewBag.ProductTypes = productTypes;
-            ViewBag.SearchTerm = searchTerm;
-
-            return View(products);
-        }
-
-        [HttpGet]
-        public ActionResult Wishlist(String userID)
-        {
-            var productTypes = db.ProductTypes.ToList();
-            productTypes.Insert(0, new ProductTypes(0, "All"));
-
-            ViewBag.ProductTypes = productTypes;
-
-            var favouriteProductIDs = db.Favourites.Where(f => f.UserId == "U00002").Select(f => f.ProductId).ToList();
-
-            var wishlistProducts = db.Products.Where(p => favouriteProductIDs.Contains(p.id)).ToList();
-
-            return View(wishlistProducts);
-        }
-
-        [HttpPost]
-        public ActionResult AddToWishlist(string userID, int productID)
-        {
-            bool isAlreadyAdded = db.Favourites.Any(f => f.UserId == userID && f.ProductId == productID);
-
-            if (isAlreadyAdded)
-            {
-                return Json(new { success = false, message = "Sản phẩm đã tồn tại trong danh sách yêu thích." });
-            }
-
-            var favourite = new Favourites { UserId = userID, ProductId = productID, CreateAt = DateTime.Now };
-            db.Favourites.Add(favourite);
-            db.SaveChanges();
-
-            return Json(new { success = true, message = "Sản phẩm đã được thêm vào danh sách yêu thích." });
-        }
-
-        [HttpPost]
-        public ActionResult RemoveFromWishlist(String userID, int productID)
-        {
-            var favourite = db.Favourites.FirstOrDefault(f => f.UserId == userID && f.ProductId == productID);
-
-            if (favourite == null)
-            {
-                return Json(new { success = false, message = "Không tìm thấy sản phẩm trong danh sách yêu thích." });
-            }
-
-            db.Favourites.Remove(favourite);
-            db.SaveChanges();
-
-            return Json(new { success = true, message = "Sản phẩm đã được xóa khỏi danh sách yêu thích." });
-        }
-
-
-
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -500,7 +391,6 @@ namespace FoodWeb.Controllers
             Response.Cookies["CartCount"].Value = null;
             Response.Cookies["CartCount"].Expires = DateTime.Now.AddDays(-1);
             TempData.Keep();
-            TempData["SuccessMsg"] = "Đã đặt hàng thành công.";
             return RedirectToAction("Index");
         }
 

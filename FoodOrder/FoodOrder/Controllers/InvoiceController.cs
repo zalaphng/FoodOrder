@@ -198,17 +198,17 @@ namespace FoodOrder.Models
                     {
                         InvoiceModels invoice = db.InvoiceModels.FirstOrDefault(i => i.FKUserID == uid && i.InvoiceID == InvoiceID && i.Status != 4);
 
-                        if (invoice != null && invoice.Status == 0)
+                        if (invoice != null)
                         {
                             invoice.Status = 3;
                             db.Entry(invoice).State = EntityState.Modified;
                             db.SaveChanges();
 
-                            TempData["SuccessMsg"] = "Hủy đơn hàng thành công.";
+                            TempData["SuccessMsg"] = "The invoice has been cancelled.";
                         }
                         else
                         {
-                            TempData["ErrorMsg"] = "Đơn hàng không thể bị hủy.";
+                            TempData["ErrorMsg"] = "There is no invoice to cancel.";
                         }
                     }
                     else

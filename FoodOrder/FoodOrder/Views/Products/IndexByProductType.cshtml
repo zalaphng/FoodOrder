@@ -61,29 +61,7 @@
                                             <ul class="product__action--link pos-absolute">
                                                 <li><a href="@Url.Action("addToCart", new { id = item.id })" data-toggle="modal"><i class="icon-shopping-cart"></i></a></li>
 
-                                                @{
-                                                    var usersInCookie = Request.Cookies["UserInfo"];
-                                                }
-                                                @if (usersInCookie != null)
-                                                {
-                                                    string user_id = usersInCookie["idUser"].ToString();
-
-                                                    <li class="header__nav-item" style="margin-right: -8px;">
-                                                        <a href="javascript:void(0);" onclick="addToWishlist('@item.id', '@user_id')">
-                                                            <i class="icon-heart"></i>
-                                                        </a>
-                                                    </li>
-
-                                                }
-                                                else
-                                                {
-                                                    <li>
-                                                        <a href="#" onclick="alert('Chưa đăng nhập');">
-                                                            <i class="icon-heart"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-
+                                                <li><a href="#"><i class="icon-heart"></i></a></li>
 
                                             </ul> <!-- End Product Action Link -->
                                         </div> <!-- End Product Image -->
