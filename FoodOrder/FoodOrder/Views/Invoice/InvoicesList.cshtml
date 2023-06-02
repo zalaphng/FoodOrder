@@ -49,7 +49,7 @@
                     var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
                     if (uid == item.FKUserID && item.Status == 0)
                     {
-                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-edit" })
+                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-cancel-override" })
                     }
                     else
                     {
