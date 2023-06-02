@@ -56,12 +56,12 @@
                     email = adminInCookie["Email"].ToString();
                     <span style="font-size: 17px; font-weight: bold; margin-left: 50px; color: #fff;">@email</span>
                     <a href="@Url.Action("Index","Home")" style="float:right; font-size:18px; font-weight: bold; margin-right: 20px; margin-top: 12px;">Food Home</a>
-                    <a href="@Url.Action("LogoutAdmin","Admin")" style="float:right; font-size:18px; font-weight: bold; margin-right: 50px; margin-top: 12px;">Logout</a>
+                    <a href="@Url.Action("LogoutAdmin","Admin")" style="float:right; font-size:18px; font-weight: bold; margin-right: 50px; margin-top: 12px;">Đăng xuất</a>
                 }
                 else
                 {
                     <a href="@Url.Action("Index","Home")" style="float:right; font-size:18px; font-weight: bold; margin-right: 20px; margin-top: 12px;">Food Home</a>
-                    <a href="@Url.Action("LoginAdmin","Admin")" style="float:right; font-size:18px;font-weight: bold; margin-right: 50px; margin-top: 12px;">Login</a>
+                    <a href="@Url.Action("LoginAdmin","Admin")" style="float:right; font-size:18px;font-weight: bold; margin-right: 50px; margin-top: 12px;">Đăng nhập</a>
                 }
 
             </nav>
@@ -87,19 +87,19 @@
                     <li class="header">MAIN NAVIGATION</li>
                     <li class="active treeview">
                         <a href="@Url.Action("Index","Admin")">
-                            <i class="fa fa-home"></i> <span>Home</span>
+                            <i class="fa fa-home"></i> <span>Trang chủ</span>
                         </a>
 
                     </li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-table"></i>
-                            <span>Products</span>
+                            <span>Mặt hàng</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/Products/ViewProductsAdmin"><i class="fa fa-circle-o"></i> List</a></li>
-                            <li><a href="/Products/CreateNewProduct"><i class="fa fa-circle-o"></i> New Product</a></li>
+                            <li><a href="/Products/ViewProductsAdmin"><i class="fa fa-circle-o"></i> Danh sách sản phẩm </a></li>
+                            <li><a href="/Products/CreateNewProduct"><i class="fa fa-circle-o"></i> sản phẩm mới </a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -123,17 +123,17 @@
                     </li>
                     <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-table"></i> <span>Contact</span>
+                            <i class="fa fa-table"></i> <span>Hòm thư</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="/Information/MessageList"><i class="fa fa-circle-o"></i> Messages</a></li>
+                            <li><a href="/Information/MessageList"><i class="fa fa-circle-o"></i> Tin nhắn</a></li>
                             @*<li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Blog</a></li>*@
                         </ul>
                     </li>
                     <li class="node-item">
                         <a href="/Admin/ListOfUsers">
-                            <i class="fa fa-user"></i> <span>User</span>
+                            <i class="fa fa-user"></i> <span>Danh sách khách hàng</span>
                         </a>
                     </li>
                     @*<li>

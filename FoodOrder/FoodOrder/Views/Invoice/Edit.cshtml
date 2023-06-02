@@ -24,7 +24,7 @@
                 <!-- TABLE: LATEST ORDERS -->
                 <div class="box box-info">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Latest Invoices</h3>
+                        <h3 class="box-title">Chi tiết chỉnh sửa</h3>
                         <div class="box-tools pull-right">
                             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -36,7 +36,7 @@
                             @Html.AntiForgeryToken()
 
                             <div class="form-horizontal">
-                                <h4>InvoiceModels</h4>
+                         
                                 <hr />
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.InvoiceID)

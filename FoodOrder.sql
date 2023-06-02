@@ -2,7 +2,6 @@ USE master
 DROP DATABASE FoodOrderDB
 GO
 
-
 CREATE DATABASE FoodOrderDB
 GO
 USE FoodOrderDB
@@ -106,11 +105,11 @@ SET IDENTITY_INSERT [ProductTypes] ON
 INSERT INTO [ProductTypes]
     ([id], [ProductTypeName])
 VALUES
-    (1, N'Fruits')
+    (1, N'Đồ ăn')
 INSERT INTO [ProductTypes]
     ([id], [ProductTypeName])
 VALUES
-    (2, N'Meats')
+    (2, N'Đồ uống')
 SET IDENTITY_INSERT [ProductTypes] OFF
 
 -- Hàng hóa
@@ -119,47 +118,47 @@ SET IDENTITY_INSERT [Products] ON
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (2, N'Green Apple', 100, N'Images/product-home-1-img-6.jpg', 1)
+    (1, N'Phin Đá', 20, N'Images/phinda.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (4, N'Pomegranate', 300, N'Images/product-home-1-img-3.jpg', 1)
+    (2, N'Espresso Đá/Sữa Đá', 25, N'Images/espresso', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (28, N'Fresh river fish', 25, N'Images/fish.jpg', 2)
+    (3, N'Bạc Xĩu', 25, N'Images/bacxiu.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (5, N'Fresh river fish', 25, N'Images/fish.jpg', 2)
+    (4, N'Cà Phê Cốt Dừa', 39, N'Images/caphecotdua.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (29, N'Cabbage vegetables', 50, N'Images/cabbage.jpg', 2)
+    (5, N'Choco Đá Xây', 39, N'Images/chocodaxay.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (30, N'Fresh red meat', 55, N'Images/redmeat.jpg', 2)
+    (6, N'Hồng Trà Đào', 25, N'Images/hongtradao.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (31, N'Fresh orange', 19, N'Images/orange.jpg', 1)
+    (7, N'Soda Chanh Dây', 19, N'Images/sodachanhday.jpg', 2)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (33, N'Ripe grapes', 39, N'Images/graps.jpg', 1)
+    (8, N'Bánh Flan', 20, N'Images/banh-flan-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (34, N'Red Tomato', 10, N'Images/tomato.jpg', 1)
+    (9, N'Tiramisu', 55, N'Images/Tiramisu-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (35, N'Cow fresh milk', 55, N'Images/milk.jpg', 2)
+    (10, N'Macaron', 35, N'Images/macaron-1.jpg', 1)
 INSERT INTO [Products]
     ([id], [ProductName], [ProductPrice], [ProductPicture], [FKProductType])
 VALUES
-    (37, N'Fresh green vegetable', 20, N'Images/green.jpg', 1)
+    (11, N'Chocolate Tart', 60, N'Images/chocolate-tart-1.jpg', 1)
 SET IDENTITY_INSERT [Products] OFF
 
 -- Khách hàng
@@ -228,15 +227,15 @@ VALUES
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (7, 3, 25, 75, N'2020-12-31 19:15:53', 28, 'I00004')
+    (7, 3, 25, 75, N'2020-12-31 19:15:53', 10, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (8, 2, 55, 110, N'2020-12-31 19:15:53', 30, 'I00004')
+    (8, 2, 55, 110, N'2020-12-31 19:15:53', 11, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
-    (9, 5, 50, 250, N'2020-12-31 19:15:53', 29, 'I00004')
+    (9, 5, 50, 250, N'2020-12-31 19:15:53', 9, 'I00004')
 INSERT INTO [Orders]
     ([Id], [Qty], [Unit_Price], [Order_Bill], [Order_Date], [FkProdId], [FkInvoiceID])
 VALUES
