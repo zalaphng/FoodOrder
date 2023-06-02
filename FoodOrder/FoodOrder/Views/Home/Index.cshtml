@@ -10,16 +10,16 @@
     <div class="hero slider-dot-fix slider-dot slider-dot-fix slider-dot--center slider-dot-size--medium slider-dot-circle  slider-dot-style--fill slider-dot-style--fill-white-active-green dot-gap__X--10">
         <!-- Start Single Hero Slide -->
         <div class="hero-slider">
-            <img src="~/Content/assets/img/hero/sliderimage1.jpg" />
+            <img src="~/Content/assets/img/slider-image2.jpg" />
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-lg-8">
                             <div class="hero__content--inner">
-                                <h6 class="title__hero title__hero--tiny text-uppercase">100% Healthy & Affordable</h6>
-                                <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Đồ uống</h1>
-                                <h4 class="title__hero title__hero--small font--regular">Thay đổi nhỏ khác biệt lớn</h4>
-                                <a href="/Products/Index" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">Mua hàng nào</a>
+                                <h6 class="title__hero title__hero--tiny text-uppercase">Không thử sao biết</h6>
+                                <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">HOMNAO CAFE</h1>
+                                <h4 class="title__hero title__hero--small font--regular">Đánh thức giác quan cùng ly cafe sáng</h4>
+                                <a href="product-single-default.html" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">Mua hàng nào</a>
                             </div>
                         </div>
                     </div>
@@ -28,14 +28,14 @@
         </div> <!-- End Single Hero Slide -->
         <!-- Start Single Hero Slide -->
         <div class="hero-slider">
-            <img src="~/Content/assets/img/hero/sliderimage1.jpg" />
+            <img src="~/Content/assets/img/slider-image1.jpg" />
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-lg-8">
                             <div class="hero__content--inner">
-                                <h6 class="title__hero title__hero--tiny text-uppercase">100% Healthy & Affordable</h6>
-                                <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">Đồ uống</h1>
+                                <h6 class="title__hero title__hero--tiny text-uppercase">Chất lượng</h6>
+                                <h1 class="title__hero title__hero--xlarge font--regular text-uppercase">HOMNAO CAFE</h1>
                                 <h4 class="title__hero title__hero--small font--regular">Thay đổi nhỏ khác biệt lớn</h4>
                                 <a href="product-single-default.html" class="btn btn--large btn--radius btn--black btn--black-hover-green font--bold text-uppercase">Mua hàng nào</a>
                             </div>
@@ -59,7 +59,7 @@
                             </ul>
                         </div>*@
                     <div class="section-content section-content--border m-b-35">
-                        <h5 class="section-content__title">Loại</h5>
+                        <h5 class="section-content__title">Danh sách</h5>
                         <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
                             @foreach (var productType in ViewBag.ProductTypes)
                             {
@@ -89,7 +89,7 @@
                                         <!-- Start Single Default Product -->
                                         <div class="product__box product__default--single text-center">
                                             <!-- Start Product Image -->
-                                            <div class="product__img-box  pos-relative">
+                                            <div class="product__img-box h-100 pos-relative">
                                                 <a href="#" class="product__img--link">
                                                     <img class="product__img img-fluid" src="~/@Html.DisplayFor(modelItem => item.ProductPicture)" alt="">
                                                 </a>
@@ -97,7 +97,29 @@
                                                 <ul class="product__action--link pos-absolute">
                                                     <li><a href="@Url.Action("addToCart","Products", new { id = item.id })" data-toggle="modal"><i class="icon-shopping-cart"></i></a></li>
 
-                                                    <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                    @{
+                                                        var usersInCookie = Request.Cookies["UserInfo"];
+                                                    }
+                                                    @if (usersInCookie != null)
+                                                    {
+                                                        string user_id = usersInCookie["idUser"].ToString();
+
+                                                        <li class="header__nav-item" style="margin-right: -8px;">
+                                                            <a href="javascript:void(0);" onclick="addToWishlist('@item.id', '@user_id')">
+                                                                <i class="icon-heart"></i>
+                                                            </a>
+                                                        </li>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>
+                                                            <a href="#" onclick="alert('Chưa đăng nhập');">
+                                                                <i class="icon-heart"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+
 
                                                 </ul> <!-- End Product Action Link -->
                                             </div> <!-- End Product Image -->

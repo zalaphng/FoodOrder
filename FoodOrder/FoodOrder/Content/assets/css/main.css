@@ -67,11 +67,11 @@ Template URL: https://hasthemes.com/
   outline: none;
 }
 *, *::after, *::before {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 body {
-  font-family: "Rubik", sans-serif;
+  font-family: "Console", sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #323232;
@@ -84,7 +84,7 @@ button {
   text-decoration: none;
   cursor: pointer;
   color: #000;
-  background: none;
+  /* background: none; */
 }
 
 a,
@@ -714,12 +714,12 @@ dl, ol, ul {
 *****************************/
 .btn {
   display: inline-block;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 14px;
   outline: none;
   transition: all 0.3s ease;
-  border-radius: 0;
-  padding: 0;
+  border-radius: 20px;
+  padding: 5px;
   transition: all 0.3s ease;
 }
 .btn--icon-left i {
@@ -3410,7 +3410,7 @@ input.round-input {
 .header__nav {
   display: flex;
   margin: 0;
-  font-size: 13px;
+  font-size: 20px;
 }
 .header__nav i {
   font-size: 10px;
@@ -3433,7 +3433,7 @@ input.round-input {
   line-height: 60px;
   text-decoration: none !important;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 900;
   display: flex;
   align-items: center;
   position: relative;
@@ -4170,7 +4170,7 @@ table tbody > tr td {
 }
 table tbody > tr td a {
   color: #222;
-  text-decoration: none !important;
+  /* text-decoration: none !important; */
   display: inline-block;
 }
 table tbody > tr td a:hover {

@@ -7,9 +7,9 @@
 }
 
 <h2 class="text-center">Danh sách đặt hàng</h2>
-<h3 class="text-warning">@TempData["Message"]</h3>
-<h3 class="text-warning">@TempData["SuccessMsg"]</h3>
-<h3 class="text-warning">@TempData["ErrorMsg"]</h3>
+<h3 class="text-success text-bold">@TempData["Message"]</h3>
+<h3 class="text-success text-bold">@TempData["SuccessMsg"]</h3>
+<h3 class="text-success text-bold">@TempData["ErrorMsg"]</h3>
 
 <table class="table table-bordered text-center">
     <tr>
@@ -17,14 +17,14 @@
         <th>Ngày đặt</th>
         <th>Tổng tiền</th>
         <th>Trạng thái</th>
-        <th>Trạng thái</th>
+        <th>Hành động</th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
             <td>@(i++)</td>
             <td>@item.DateInvoice</td>
-            <td>@item.Total_Bill</td>
+            <td>$@item.Total_Bill</td>
             <td>
                 @if (item.Status == 0)
                 {
@@ -47,11 +47,16 @@
                 @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
                 {
                     var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
-                    if (uid == item.FKUserID)
+                    if (uid == item.FKUserID && item.Status == 0)
                     {
-                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs" })
+                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-cancel-override" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Hủy đơn hàng", "#", new { }, new { @class = "btn btn-xs disabled" })
                     }
                 }
+
             </td>
         </tr>
     }

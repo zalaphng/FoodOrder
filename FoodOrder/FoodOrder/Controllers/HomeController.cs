@@ -19,5 +19,6 @@ namespace FoodWeb.Controllers
             ViewBag.ProductTypes = productTypes;
             return View(products);
         }
+
     }
 }

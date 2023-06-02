@@ -11,14 +11,20 @@
             <div class="col-12">
                 <!-- Start Section Title -->
                 @*<div class="section-content section-content--border m-b-35">
-                        <h5 class="section-content__title">Categories</h5>
-                        <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
-                            <li><a class="nav-link active" data-toggle="tab" href="#fruits">Fruites</a></li>
-                        </ul>
-                    </div>*@
+            <h5 class="section-content__title">Categories</h5>
+            <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
+                <li><a class="nav-link active" data-toggle="tab" href="#fruits">Fruites</a></li>
+            </ul>
+        </div>*@
+
+                @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                {
+                    <h3 class="text-alert">@ViewBag.ErrorMessage</h3>
+                }
+
 
                 <div class="section-content section-content--border m-b-35">
-                    <h5 class="section-content__title">Danh sách</h5>
+                    <h5 class="section-content__title">Categories</h5>
                     <ul class="tablist tablist--style-blue tablist--style-gap-20 nav">
                         @foreach (var productType in ViewBag.ProductTypes)
                         {
@@ -60,6 +66,7 @@
                                             <!-- Start Product Action Link-->
                                             <ul class="product__action--link pos-absolute">
                                                 <li><a href="@Url.Action("addToCart", new { id = item.id })" data-toggle="modal"><i class="icon-shopping-cart"></i></a></li>
+
 
                                                 @{
                                                     var usersInCookie = Request.Cookies["UserInfo"];
