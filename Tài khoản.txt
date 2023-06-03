@@ -1,0 +1,12 @@
+// Admin
+
+admin@gmail.com
+testadmin
+
+// User
+
+testuser@gmail.com
+testuser
+
+testuser2@gmail.com
+testuser
