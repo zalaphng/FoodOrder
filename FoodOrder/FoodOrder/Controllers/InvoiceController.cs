@@ -145,6 +145,44 @@ namespace FoodOrder.Models
             }
         }
 
+        public ActionResult User_OrderDetails(string FKInvoiceID)
+        {
+            var adminInCookie = Request.Cookies["AdminInfo"];
+            if (adminInCookie != null)
+            {
+                return View();
+            }
+            else
+            {
+                var userInCookie = Request.Cookies["UserInfo"];
+                if (userInCookie != null)
+                {
+                    var userIDFromCookie = userInCookie.Values["idUser"];
+                    var invoice = db.InvoiceModels.FirstOrDefault(i => i.FKUserID == userIDFromCookie);
+
+                    if (invoice != null)
+                    {
+                        var orders = db.Orders.Include(o => o.Products)
+                            .Where(o => o.FkInvoiceID == FKInvoiceID)
+                            .ToList();
+
+                        TempData["InvoiceTotal"] = invoice.Total_Bill;
+                        return View(orders);
+                    }
+                    else
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "User");
+                }
+            }
+        }
+
+
+
         public ActionResult InvoicesList(string FKUserID)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];

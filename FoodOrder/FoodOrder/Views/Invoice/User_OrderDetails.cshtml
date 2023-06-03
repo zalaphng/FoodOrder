@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FoodOrder.Models.Orders>
+
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered text-center">
+@{
+    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+}
+@grid.GetHtml(
+    tableStyle: "custom-table",
+    headerStyle: "thead-dark",
+    footerStyle: "grid-footer",
+    alternatingRowStyle: "even-row",
+    columns: grid.Columns(
+        grid.Column("FkInvoiceID", "Mã hoá đơn"),
+        grid.Column(format: @<text>@item.Products.ProductName</text>, header: "Tên mặt hàng"),
+        grid.Column(format: @<text><span class="label label-success">@item.Qty</span></text>, header: "Số lượng"),
+        grid.Column("Unit_Price", "Giá", format: @<text>$@item.Unit_Price</text>),
+        grid.Column("Order_Bill", "Tổng số tiền", format: @<text>$@item.Order_Bill</text>),
+        grid.Column("Order_Date", "Ngày đặt hàng")
+    )
+)
+
+</table>
+
+<div class="cart-table-button m-t-10">
+    <div class="cart-table-button--left">
+        <a href="/Products/Index" class="btn btn--box btn--large btn--radius btn--green btn--green-hover-black btn--uppercase font--bold m-t-20">Tiếp tục mua hàng</a>
+    </div>
+    <div class="cart-table-button--right d-flex">
+    <h3 style="float:right;" class="m-t-20 m-r-20">Total: $@TempData["InvoiceTotal"] </h3>
+        <button class="btn btn--box btn--large btn--radius btn--black btn--black-hover-green btn--uppercase font--bold m-t-20 m-r-20"
+                onclick="{window.history.back()}">
+            Quay lại
+        </button>
+    </div>
+</div>

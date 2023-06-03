@@ -63,7 +63,7 @@
                                 columns: grid.Columns(
                                     grid.Column("ProductName", "Tên sản phẩm"),
                                     grid.Column("ProductTypes.ProductTypeName", "Loại sản phẩm"),
-                                    grid.Column("ProductPrice", "Giá sản phẩm", format: @<text><span class="label label-success">@item.ProductPrice</span></text>),
+                                    grid.Column("ProductPrice", "Giá sản phẩm", format: @<text><span class="label label-success">$@item.ProductPrice</span></text>),
                                     grid.Column("ProductPicture", "Hình ảnh", format: @<text><img class="product__img img-fluid" width="200" height="200" src="~/@item.ProductPicture" alt=""></text>),
                                     grid.Column("id", "Action", format: @<text>
                                         @Html.ActionLink("Chỉnh sửa", "EditProduct", new { id = item.id }, new { @class = "btn btn-block btn-success" })

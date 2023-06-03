@@ -1,4 +1,4 @@
-﻿@model List<FoodOrder.Models.InvoiceModels>
+﻿ @model List<FoodOrder.Models.InvoiceModels>
 
 @{
     ViewBag.Title = "Invoices";
@@ -13,12 +13,14 @@
 
 <table class="table table-bordered text-center">
     @{
-    var grid = new WebGrid(source: Model);
+        var grid = new WebGrid(source: Model, rowsPerPage: 10);
 }
 
 @grid.GetHtml(
-    tableStyle: "table",
+        tableStyle: "custom-table",
     headerStyle: "thead-dark",
+    footerStyle: "grid-footer",
+        alternatingRowStyle: "even-row",
     columns: grid.Columns(
         grid.Column("",
             header: "STT",
@@ -45,18 +47,19 @@
             }
         </text>),
         grid.Column("Action", format: @<text>
-    @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
-    {
-        var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
-        if (uid == item.FKUserID && item.Status == 0)
+                <a href="@Url.Action("User_OrderDetails", "Invoice", new { FKInvoiceID = item.InvoiceID })" class="btn btn-info btn-xs btn-cancel-override">Xem chi tiết</a>
+        @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
         {
-            <a href="@Url.Action("Cancel", "Invoice", new { InvoiceID = item.InvoiceID })" class="btn btn-danger btn-xs btn-cancel-override" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">Hủy đơn hàng</a>
+            var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
+            if (uid == item.FKUserID && item.Status == 0)
+            {
+                <a href="@Url.Action("Cancel", "Invoice", new { InvoiceID = item.InvoiceID })" class="btn btn-danger btn-xs btn-cancel-override" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">Hủy đơn hàng</a>
+            }
+            else
+            {
+                <a href="#" class="btn btn-xs disabled">Hủy đơn hàng</a>
+            }
         }
-        else
-        {
-            <a href="#" class="btn btn-xs disabled">Hủy đơn hàng</a>
-        }
-    }
 </text>)
 
 

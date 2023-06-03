@@ -58,39 +58,39 @@
     tableStyle: "custom-table",
     headerStyle: "thead-dark",
     alternatingRowStyle: "even-row",
-    @*fillEmptyRows: true,*@
-    footerStyle: "grid-footer",
-    columns: grid.Columns(
-        grid.Column("InvoiceID", "Mã hóa đơn"),
-        grid.Column("Users.Name", "Tên khách hàng"),
-        grid.Column("Users.Address", "Địa chỉ"),
-        grid.Column("Total_Bill", "Chi phí hóa đơn"),
-        grid.Column("DateInvoice", "Ngày lập"),
-        grid.Column("Status", "Trạng thái", format: (item) =>
-        {
-            if (item.Status == 0)
-            {
-                return Html.Raw("<span class=\"label label-primary\">Chờ xác nhận</span>");
-            }
-            else if (item.Status == 1)
-            {
-                return Html.Raw("<span class=\"label label-warning\">Đang giao hàng</span>");
-            }
-            else if (item.Status == 2)
-            {
-                return Html.Raw("<span class=\"label label-success\">Đã giao hàng</span>");
-            }
-            else if (item.Status == 3)
-            {
-                return Html.Raw("<span class=\"label label-danger\">Đã hủy</span>");
-            }
-            return null;
-        }),
-        grid.Column("InvoiceID", "Chỉnh sửa", format: @<text>
-             @Html.ActionLink("Cập nhật trạng thái", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Chi Tiết Hóa Đơn", "OrderDetails", "Invoice", new { FKInvoiceID = item.InvoiceID }, new { @class = "btn btn-info" })
-                <a href = "@Url.Action("Delete", "Invoice", new { id = item.InvoiceID })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa hóa đơn này?')">Xóa Hóa Đơn</a>
-    </text>))
+                            @*fillEmptyRows: true,*@
+footerStyle: "grid-footer",
+columns: grid.Columns(
+grid.Column("InvoiceID", "Mã hóa đơn"),
+grid.Column("Users.Name", "Tên khách hàng"),
+grid.Column("Users.Address", "Địa chỉ"),
+grid.Column("Total_Bill", "Chi phí hóa đơn", format: @<text>$@item.Total_Bill</text>),
+grid.Column("DateInvoice", "Ngày lập"),
+grid.Column("Status", "Trạng thái", format: (item) =>
+{
+if (item.Status == 0)
+{
+return Html.Raw("<span class=\"label label-primary\">Chờ xác nhận</span>");
+}
+else if (item.Status == 1)
+{
+return Html.Raw("<span class=\"label label-warning\">Đang giao hàng</span>");
+}
+else if (item.Status == 2)
+{
+return Html.Raw("<span class=\"label label-success\">Đã giao hàng</span>");
+}
+else if (item.Status == 3)
+{
+return Html.Raw("<span class=\"label label-danger\">Đã hủy</span>");
+}
+return null;
+}),
+grid.Column("InvoiceID", "Chỉnh sửa", format: @<text>
+                                @Html.ActionLink("Cập nhật trạng thái", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Chi Tiết Hóa Đơn", "OrderDetails", "Invoice", new { FKInvoiceID = item.InvoiceID }, new { @class = "btn btn-info" })
+                                <a href="@Url.Action("Delete", "Invoice", new { id = item.InvoiceID })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa hóa đơn này?')">Xóa Hóa Đơn</a>
+                            </text>))
 )
 
 

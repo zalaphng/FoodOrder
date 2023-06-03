@@ -52,22 +52,24 @@
                         <div class="table-responsive">
                             <table class="table no-margin">
                                 @{
-    var grid = new WebGrid(source: Model, rowsPerPage: 15);
-}
-@grid.GetHtml(
-     tableStyle: "custom-table",
-    headerStyle: "thead-dark",
-    @*fillEmptyRows: true,*@
-      footerStyle: "grid-footer",
-    alternatingRowStyle: "even-row",
-    columns: grid.Columns(
-        grid.Column("FkInvoiceID", "Mã hóa đơn"),
-        grid.Column("Products.ProductName", "Tên sản phẩm"),
-        grid.Column("Qty", "Số lượng", format: @<text><span class="label label-success">@item.Qty</span></text>),
-        grid.Column("Unit_Price", "Giá"),
-        grid.Column("Order_Bill", "Tổng số tiền"),
-        grid.Column("Order_Date", "Ngày mua")
-    )
+                                    var grid = new WebGrid(source: Model, rowsPerPage: 15);
+                                }
+                                @grid.GetHtml(
+                                     tableStyle: "custom-table",
+                                    headerStyle: "thead-dark",
+                            @*fillEmptyRows: true,*@
+footerStyle: "grid-footer",
+alternatingRowStyle: "even-row",
+columns: grid.Columns(
+grid.Column("FkInvoiceID", "Mã hóa đơn"),
+grid.Column("Products.ProductName", "Tên sản phẩm"),
+grid.Column("Qty", "Số lượng", format: @<text>
+                                <span class="label label-success">@item.Qty</span>
+                            </text>),
+grid.Column("Unit_Price", "Giá", format: @<text>$@item.Unit_Price</text>),
+grid.Column("Order_Bill", "Tổng số tiền", format: @<text>$@item.Order_Bill</text>),
+grid.Column("Order_Date", "Ngày mua")
+)
 )
 
                             </table>

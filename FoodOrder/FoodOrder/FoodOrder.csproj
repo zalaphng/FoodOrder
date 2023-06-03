@@ -1107,6 +1107,7 @@
     <Content Include="Views\ProductTypes\Edit.cshtml" />
     <Content Include="Views\ProductTypes\Index.cshtml" />
     <Content Include="Views\ProductTypes\Details.cshtml" />
+    <Content Include="Views\Invoice\User_OrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

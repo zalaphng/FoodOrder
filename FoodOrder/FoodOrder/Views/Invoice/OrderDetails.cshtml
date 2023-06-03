@@ -32,34 +32,29 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table no-margin">
-                                <thead>
-                                    <tr>
-                                        <th>Mã hoá đơn</th>
-                                        <th>Tên mặt hàng</th>
-                                        <th>Số lượng</th>
-                                        <th>Giá</th>
-                                        <th>Tổng số tiền</th>
-                                        <th>Ngaỳ đặt hàng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.FkInvoiceID)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Products.ProductName)</td>
-                                            <td><span class="label label-success">@Html.DisplayFor(modelItem => item.Qty)</span></td>
-                                            <td>@Html.DisplayFor(modelItem => item.Unit_Price)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Order_Bill)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Order_Date)</td>
-                                        </tr>
+                                    @{
+                                        var grid = new WebGrid(source: Model, rowsPerPage: 10);
                                     }
-                                    </tbody>
+                                        @grid.GetHtml(
+                                        tableStyle: "custom-table",
+                                        headerStyle: "thead-dark",
+                                        footerStyle: "grid-footer",
+                                        alternatingRowStyle: "even-row",
+                                        columns: grid.Columns(
+                                            grid.Column("FkInvoiceID", "Mã hoá đơn"),
+                                            grid.Column(format: @<text>@item.Products.ProductName</text>, header: "Tên mặt hàng"),
+                                            grid.Column(format: @<text><span class="label label-success">@item.Qty</span></text>, header: "Số lượng"),
+                                            grid.Column("Unit_Price", "Giá", format: @<text>$@item.Unit_Price</text>),
+                                            grid.Column("Order_Bill", "Tổng số tiền", format: @<text>$@item.Order_Bill</text>),
+                                            grid.Column("Order_Date", "Ngày đặt hàng")
+                                        )
+                                    )
+
                             </table>
                         </div><!-- /.table-responsive -->
                     </div><!-- /.box-body -->
                     <div class="box-footer clearfix">
-                        <h2 class="pull-right">Total: @TempData["InvoiceTotal"]</h2>
+                        <h2 class="pull-right">Total: $@TempData["InvoiceTotal"]</h2>
                     </div><!-- /.box-footer -->
                 </div><!-- /.box -->
             </div>

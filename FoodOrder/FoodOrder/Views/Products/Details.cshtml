@@ -35,48 +35,42 @@
             </div>
             <div class="box-body">
                 <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Mã sản phẩm</th>
-                            <th>Ngày đặt</th>
-                            <th>Số lượng</th>
-                            <th>Giá tiền</th>
-                            <th>Tổng giá tiền</th>
-                            <th>Tên sản phẩm</th>
-                            <th>Trạng thái</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var order in Model.Orders)
-                        {
-                            <tr>
-                                <td>@order.FkInvoiceID</td>
-                                <td>@order.Order_Date</td>
-                                <td>@order.Qty</td>
-                                <td>@order.Unit_Price</td>
-                                <td>@order.Order_Bill</td>
-                                <td>@order.Products.ProductName</td>
-                                <td>
-                                    @if (order.InvoiceModels.Status == 0)
-                                    {
-                                        <span class="label label-primary">Chờ xác nhận</span>
-                                    }
-                                    else if (order.InvoiceModels.Status == 1)
-                                    {
-                                        <span class="label label-warning">Đang giao hàng</span>
-                                    }
-                                    else if (order.InvoiceModels.Status == 2)
-                                    {
-                                        <span class="label label-success">Đã giao hàng</span>
-                                    }
-                                    else if (order.InvoiceModels.Status == 3)
-                                    {
-                                        <span class="label label-danger">Đã hủy</span>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
+                    @{
+                        var grid = new WebGrid(Model.Orders, rowsPerPage: 10);
+                    }
+                    @grid.GetHtml(
+                        tableStyle: "custom-table",
+                        headerStyle: "thead-dark",
+                        fillEmptyRows: false,
+                        alternatingRowStyle: "even-row",
+                        columns: grid.Columns(
+                            grid.Column("FkInvoiceID", "Mã sản phẩm"),
+                            grid.Column("Order_Date", "Ngày đặt"),
+                            grid.Column("Qty", "Số lượng"),
+                            grid.Column("Unit_Price", "Giá tiền", format: @<text>$@item.Unit_Price</text>),
+                            grid.Column("Order_Bill", "Tổng giá tiền", format: @<text>$@item.Order_Bill</text>),
+                            grid.Column(format: @<text>@item.Products.ProductName</text>, header: "Tên sản phẩm"),
+                            grid.Column(format: @<text>
+                                         @if (item.InvoiceModels.Status == 0)
+                                         {
+                                            <span class="label label-primary">Chờ xác nhận</span>
+                                         }
+                                         else if (item.InvoiceModels.Status == 1)
+                                            {
+                                            <span class="label label-warning">Đang giao hàng</span>
+                                         }
+                                         else if (item.InvoiceModels.Status == 2)
+                                         {
+                                            <span class="label label-success">Đã giao hàng</span>
+                                         }
+                                         else if (item.InvoiceModels.Status == 3)
+                                         {
+                                            <span class="label label-danger">Đã hủy</span>
+                                         }
+                                </text> , header: "Trạng thái")
+                             )
+                         )
+
                 </table>
             </div><!-- /.box-body -->
         </div><!-- /.box -->

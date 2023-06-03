@@ -51,7 +51,7 @@
                                     columns: grid.Columns(
                                         grid.Column("InvoiceID", "Mã Hóa Đơn"),
                                         grid.Column("DateInvoice", "Ngày đặt"),
-                                        grid.Column("Total_Bill", "Tổng tiền", format: @<text>@string.Format("{0:C}", item.Total_Bill)</text>),
+                                        grid.Column("Total_Bill", "Tổng tiền", format: @<text> $@item.Total_Bill </text>),
                                         grid.Column("Status", "Trạng thái", format: @<text>
                                             @if (item.Status == 0)
                                             {
