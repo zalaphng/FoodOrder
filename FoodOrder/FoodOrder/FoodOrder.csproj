@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ProductTypesController.cs" />
     <Compile Include="Models\AdminModels\UserChangePasswordAdminModels.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformationController.cs" />
@@ -411,6 +412,7 @@
     <Content Include="Content\dist\js\pages\dashboard2.js" />
     <Content Include="Content\main-admin.css" />
     <Content Include="Content\override\font\DVN-Rubik\Readme.txt" />
+    <Content Include="Content\override\grid.css" />
     <Content Include="Content\override\home.js" />
     <Content Include="Content\plugins\bootstrap-slider\bootstrap-slider.js" />
     <Content Include="Content\plugins\bootstrap-slider\slider.css" />
@@ -1101,6 +1103,10 @@
     <Content Include="Views\Admin\EditUserPassword.cshtml" />
     <Content Include="Views\Products\IndexByProductName.cshtml" />
     <Content Include="Views\Products\Wishlist.cshtml" />
+    <Content Include="Views\ProductTypes\Create.cshtml" />
+    <Content Include="Views\ProductTypes\Edit.cshtml" />
+    <Content Include="Views\ProductTypes\Index.cshtml" />
+    <Content Include="Views\ProductTypes\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

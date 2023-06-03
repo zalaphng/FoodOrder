@@ -1,0 +1,104 @@
+﻿@model IEnumerable<FoodOrder.Models.InvoiceModels>
+
+@{
+    ViewBag.Title = "ListOfInvoices";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Danh sách hóa đơn</h3>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline pull-left" role="search" action="/Admin/ListOfInvoices" method="GET">
+                    <div class="form-group">
+                        <label for="name">Search:</label>
+                        <div class="input-group">
+                            <input type="search" style="width: 300px;" class="form-control" placeholder="Nhập chính xác tên khách hàng..." aria-label="Search" name="userName">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">List bill</li>
+        </ol>
+    </section>
+
+    <section class="content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- TABLE: LATEST ORDERS -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table no-margin">
+                                @{
+                                    var grid = new WebGrid(source: Model, rowsPerPage: 10);
+                                }
+                                @grid.GetHtml(
+    tableStyle: "table no-margin",
+    headerStyle: "thead-light",
+    alternatingRowStyle: "even-row",
+    columns: grid.Columns(
+        grid.Column("InvoiceID", "Mã hóa đơn"),
+        grid.Column("Users.Name", "Tên khách hàng"),
+        grid.Column("Users.Address", "Địa chỉ"),
+        grid.Column("Total_Bill", "Chi phí hóa đơn"),
+        grid.Column("DateInvoice", "Ngày lập"),
+        grid.Column("Status", "Trạng thái", format: (item) =>
+        {
+            if (item.Status == 0)
+            {
+                return Html.Raw("<span class=\"label label-primary\">Chờ xác nhận</span>");
+            }
+            else if (item.Status == 1)
+            {
+                return Html.Raw("<span class=\"label label-warning\">Đang giao hàng</span>");
+            }
+            else if (item.Status == 2)
+            {
+                return Html.Raw("<span class=\"label label-success\">Đã giao hàng</span>");
+            }
+            else if (item.Status == 3)
+            {
+                return Html.Raw("<span class=\"label label-danger\">Đã hủy</span>");
+            }
+            return null;
+        }),
+             @Html.ActionLink("Cập nhật trạng thái", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Chi Tiết Hóa Đơn", "OrderDetails", "Invoice", new { FKInvoiceID = item.InvoiceID }, new { @class = "btn btn-info" })
+                < a href = "@Url.Action("Delete", "Invoice", new { id = item.InvoiceID })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa hóa đơn này?')">Xóa Hóa Đơn</a>
+    )
+)
+
+
+                            </table>
+                        </div><!-- /.table-responsive -->
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <h2 class="pull-right">Tổng Doanh Thu: $@TempData["InvoiceTotal"]</h2>
+                    </div><!-- /.box-footer -->
+                </div><!-- /.box -->
+            </div>
+        </div>
+    </section>
+</div>

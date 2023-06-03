@@ -8,9 +8,26 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            Danh sách khách hàng
-        </h1>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Danh sách khách hàng</h3>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline pull-left" role="search" action="/Admin/ListOfUsers" method="GET">
+                    <div class="form-group">
+                        <label for="name">Search:</label>
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Nhập tên khách hàng..." aria-label="Search" name="name">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Users</li>
@@ -32,40 +49,35 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table no-margin">
-                                <thead>
-                                    <tr>
-                                        <th>Mã khách hàng</th>
-                                        <th>Tên khách hàng</th>
-                                        <th>Email</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Chỉnh sửa</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                    <tr>
-                                        <td>@Html.DisplayFor(modelItem => item.userid)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                                        @*<td>@Html.DisplayFor(modelItem => item.Email, new { @class = "email-text" })</td>*@
-                                        <td>
-                                            @{
-                                                var email = item.Email;
-                                            }
-                                            <a href="mailto:@email" class="email-text">@email</a>
-                                        </td>
-                                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                                        <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                        <td>
-                                            @Html.ActionLink("Cập nhật thông tin", "EditUser", "Admin", new { uid = item.userid }, new { @class = "btn btn-primary" })
-                                            @Html.ActionLink("Thay đổi mật khẩu", "EditUserPassword", "Admin", new { uid = item.userid }, new { @class = "btn btn-success" })
-                                            @Html.ActionLink("Danh sách hóa đơn", "UserInvoices", "Admin", new { UserID = item.userid }, new { @class = "btn btn-info" })
-                                            <a href="@Url.Action("DeleteUser", "Admin", new { id = item.userid })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này \n *Sẽ xóa tất cả hóa đơn của khách hàng này*?')">Xóa Khách hàng</a>
-                                        </td>
-                                    </tr>
-                                    }
-                                </tbody>
+                                @{
+                                    var grid = new WebGrid(source: Model, rowsPerPage: 7);
+                                }
+                                @grid.GetHtml(
+                                    @*tableStyle: "table table-bordered table-hover",*@
+                                     tableStyle: "custom-table", // Sử dụng lớp CSS custom-table cho bảng
+                                    headerStyle: "thead-dark",
+                                    @*fillEmptyRows: true,*@
+                                    @*mode: WebGridPagerModes.Numeric,*@
+                                     footerStyle: "grid-footer",
+                                    alternatingRowStyle: "even-row",
+                                    columns: grid.Columns(
+                                        grid.Column("userid", "Mã khách hàng"),
+                                        grid.Column("Name", "Tên khách hàng"),
+                                        grid.Column("Email", "Email", format: @<text>
+                                                <a href="mailto:@item.Email" class="email-text">@item.Email</a>
+                                        </text>),
+                                    grid.Column("Address", "Địa chỉ"),
+                                    grid.Column("PhoneNumber", "Số điện thoại"),
+                                    grid.Column("userid", "Chỉnh sửa", format: @<text>
+                                @Html.ActionLink("Cập nhật thông tin", "EditUser", "Admin", new { uid = item.userid }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Thay đổi mật khẩu", "EditUserPassword", "Admin", new { uid = item.userid }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Danh sách hóa đơn", "UserInvoices", "Admin", new { UserID = item.userid }, new { @class = "btn btn-info" })
+                                <a href="@Url.Action("DeleteUser", "Admin", new { id = item.userid })" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này \n *Sẽ xóa tất cả hóa đơn của khách hàng này*?')">Xóa Khách hàng</a>
+                            </text>)
+                 )
+             )
+
+
                             </table>
                         </div><!-- /.table-responsive -->
                     </div><!-- /.box-body -->

@@ -157,15 +157,20 @@ namespace FoodWeb.Controllers
 
 
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
+                 if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
                 Products products = db.Products.Find(id);
                 db.Products.Remove(products);
                 db.SaveChanges();
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("ViewProductsAdmin", "Products");
             }
             else
             {
@@ -179,8 +184,8 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-
         }
+
         [HttpGet]
         public ActionResult CreateNewProduct()
         {

@@ -51,29 +51,25 @@
                     <div class="box-body">
                         <div class="table-responsive">
                             <table class="table no-margin">
-                                <thead>
-                                    <tr>
-                                        <th>Mã hóa đơn</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Số lượng</th>
-                                        <th>Giá</th>
-                                        <th>Tổng số tiền</th>
-                                        <th>ngày mua</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.FkInvoiceID)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Products.ProductName)</td>
-                                            <td><span class="label label-success">@Html.DisplayFor(modelItem => item.Qty)</span></td>
-                                            <td>@Html.DisplayFor(modelItem => item.Unit_Price)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Order_Bill)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Order_Date)</td>
-                                        </tr>
-                                    }
-                                </tbody>
+                                @{
+    var grid = new WebGrid(source: Model, rowsPerPage: 15);
+}
+@grid.GetHtml(
+     tableStyle: "custom-table",
+    headerStyle: "thead-dark",
+    @*fillEmptyRows: true,*@
+      footerStyle: "grid-footer",
+    alternatingRowStyle: "even-row",
+    columns: grid.Columns(
+        grid.Column("FkInvoiceID", "Mã hóa đơn"),
+        grid.Column("Products.ProductName", "Tên sản phẩm"),
+        grid.Column("Qty", "Số lượng", format: @<text><span class="label label-success">@item.Qty</span></text>),
+        grid.Column("Unit_Price", "Giá"),
+        grid.Column("Order_Bill", "Tổng số tiền"),
+        grid.Column("Order_Date", "Ngày mua")
+    )
+)
+
                             </table>
                         </div><!-- /.table-responsive -->
                     </div><!-- /.box-body -->
