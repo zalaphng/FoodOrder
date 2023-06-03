@@ -50,33 +50,29 @@
                     </div><!-- /.box-header -->
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
-                            <tr>
-                                <th>@Html.DisplayNameFor(model => model.ProductName)</th>
-                                <th>@Html.DisplayNameFor(model => model.ProductTypes.ProductTypeName)</th>
-                                <th>@Html.DisplayNameFor(model => model.ProductPrice)</th>
-                                <th>@Html.DisplayNameFor(model => model.ProductPicture)</th>
-                                <th>Action</th>
-                            </tr>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ProductTypes.ProductTypeName)</td>
-                                    <td><span class="label label-success">@Html.DisplayFor(modelItem => item.ProductPrice)</span></td>
-                                    <td><img class="product__img img-fluid" sty" width="200" height="200" src="~/@Html.DisplayFor(modelItem => item.ProductPicture)" alt=""></td>
-                                    <td>
+                            
+                            @{
+                                var grid = new WebGrid(source: Model, rowsPerPage: 3);
+                            }
+                            @grid.GetHtml(
+                                     tableStyle: "custom-table",
+                                headerStyle: "thead-dark",
+                                footerStyle: "grid-footer",
+                                @*fillEmptyRows: true,*@
+                                alternatingRowStyle: "even-row",
+                                columns: grid.Columns(
+                                    grid.Column("ProductName", "Tên sản phẩm"),
+                                    grid.Column("ProductTypes.ProductTypeName", "Loại sản phẩm"),
+                                    grid.Column("ProductPrice", "Giá sản phẩm", format: @<text><span class="label label-success">@item.ProductPrice</span></text>),
+                                    grid.Column("ProductPicture", "Hình ảnh", format: @<text><img class="product__img img-fluid" width="200" height="200" src="~/@item.ProductPicture" alt=""></text>),
+                                    grid.Column("id", "Action", format: @<text>
                                         @Html.ActionLink("Chỉnh sửa", "EditProduct", new { id = item.id }, new { @class = "btn btn-block btn-success" })
                                         @Html.ActionLink("Chi tiết", "Details", new { id = item.id }, new { @class = "btn btn-info btn-block" })
-                                        <p class="btn btn-danger btn-block"
-                                                onclick="if (confirm('bạn có chắc bạn muốn xóa mục này ?'))
-                                                {
-                                                    window.location.href = '@Url.Action("Delete", "Products", new { id = item.id }  )';
-                                                }">
-                                            Xóa sản phẩm
-                                        </p>
-                                    </td>
-                                </tr>
-                            }
+                                        <p class="btn btn-danger btn-block" onclick="if (confirm('Bạn có chắc bạn muốn xóa mục này?')) { window.location.href = '@Url.Action("Delete", "Products", new { id = item.id })'; }">Xóa sản phẩm</p>
+                                    </text>)
+                                )
+                            )
+
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

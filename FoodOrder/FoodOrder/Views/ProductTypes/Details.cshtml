@@ -1,0 +1,60 @@
+﻿@model FoodOrder.Models.ProductTypes
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdminPage.cshtml";
+}
+
+<style>
+    .box-custom {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div class="content-wrapper">
+    <div class="box-header">
+        <h3 class="box-title">Danh sách sản phẩm của loại sản phẩm @Model.ProductTypeName</h3>
+    </div><!-- /.box-header -->
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <p class="text-muted text-center">Mã loại: @Model.id</p>
+            <p class="text-muted text-center">Tên loại mặt hàng: @Model.ProductTypeName</p>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách sản phẩm</h3>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered table-hover">
+                    @{
+                                var grid = new WebGrid(source: Model.Products, rowsPerPage: 3);
+                            }
+                            @grid.GetHtml(
+                                     tableStyle: "custom-table",
+                                headerStyle: "thead-dark",
+                                footerStyle: "grid-footer",
+                                @*fillEmptyRows: true,*@
+                                alternatingRowStyle: "even-row",
+                                columns: grid.Columns(
+                                    grid.Column("ProductName", "Tên sản phẩm"),
+                                    grid.Column("ProductTypes.ProductTypeName", "Loại sản phẩm"),
+                                    grid.Column("ProductPrice", "Giá sản phẩm", format: @<text><span class="label label-success">@item.ProductPrice</span></text>),
+                                    grid.Column("ProductPicture", "Hình ảnh", format: @<text><img class="product__img img-fluid" width="200" height="200" src="~/@item.ProductPicture" alt=""></text>),
+                                    grid.Column("id", "Action", format: @<text>
+                                        @Html.ActionLink("Chỉnh sửa", "EditProduct", "Products", new { id = item.id }, new { @class = "btn btn-block btn-success" })
+                                        @Html.ActionLink("Chi tiết", "Details", "Products", new { id = item.id }, new { @class = "btn btn-info btn-block" })
+                                        <p class="btn btn-danger btn-block" onclick="if (confirm('Bạn có chắc bạn muốn xóa mục này?')) { window.location.href = '@Url.Action("Delete", "Products", new { id = item.id })'; }">Xóa sản phẩm</p>
+                                    </text>)
+                                )
+                            )
+
+                </table>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div><!-- /.col -->
+</div><!-- /.row -->

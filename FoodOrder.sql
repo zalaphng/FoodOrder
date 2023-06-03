@@ -95,6 +95,7 @@ CREATE TABLE [Orders]
 GO
 
 -- Admin
+-- Mật khẩu: testadmin
 
 INSERT INTO [AdminLogins]
     ([adminid], [Email], [Password])

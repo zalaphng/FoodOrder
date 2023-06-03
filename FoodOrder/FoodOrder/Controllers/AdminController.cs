@@ -181,13 +181,19 @@ namespace FoodWeb.Controllers
         }
 
 
-        public ActionResult ListOfUsers()
+        public ActionResult ListOfUsers(string name)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
-                List<Users> user = db.Users.ToList<Users>();
-                return View(user);
+                var users = db.Users.ToList();
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    users = users.Where(u => u.Name.Contains(name)).ToList();
+                }
+
+                return View(users);
             }
             else
             {

@@ -37,42 +37,44 @@
                         <h3 class="text-warning">@TempData["ErrorMsg"]</h3>
 
                         <table class="table table-bordered text-center">
-                            <tr>
-                                <th>Mã Hóa Đơn</th>
-                                <th>Ngày đặt</th>
-                                <th>Tổng tiền</th>
-                                <th>Trạng thái</th>
-                                <th>Action</th>
-                            </tr>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>@item.InvoiceID</td>
-                                    <td>@item.DateInvoice</td>
-                                    <td>$@item.Total_Bill</td>
-                                    <td>
-                                        @if (item.Status == 0)
-                                        {
-                                            <span class="label label-primary">Chờ xác nhận</span>
-                                        }
-                                        else if (item.Status == 1)
-                                        {
-                                            <span class="label label-warning">Đang giao hàng</span>
-                                        }
-                                        else if (item.Status == 2)
-                                        {
-                                            <span class="label label-success">Đã giao hàng</span>
-                                        }
-                                        else if (item.Status == 3)
-                                        {
-                                            <span class="label label-danger">Đã hủy</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Chỉnh sửa", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-edit" })
-                                    </td>
-                                </tr>
+                            @{
+                                var grid = new WebGrid(source: Model, rowsPerPage: 10);
                             }
+
+                            <div class="table-responsive">
+                                @grid.GetHtml(
+                                     tableStyle: "custom-table",
+                                    headerStyle: "thead-dark",
+                                    alternatingRowStyle: "even-row",
+                                    @*fillEmptyRows: true,*@
+                                    footerStyle: "grid-footer",
+                                    columns: grid.Columns(
+                                        grid.Column("InvoiceID", "Mã Hóa Đơn"),
+                                        grid.Column("DateInvoice", "Ngày đặt"),
+                                        grid.Column("Total_Bill", "Tổng tiền", format: @<text>@string.Format("{0:C}", item.Total_Bill)</text>),
+                                        grid.Column("Status", "Trạng thái", format: @<text>
+                                            @if (item.Status == 0)
+                                            {
+                                                <span class="label label-primary">Chờ xác nhận</span>
+                                            }
+                                            else if (item.Status == 1)
+                                            {
+                                                <span class="label label-warning">Đang giao hàng</span>
+                                            }
+                                            else if (item.Status == 2)
+                                            {
+                                                <span class="label label-success">Đã giao hàng</span>
+                                            }
+                                            else if (item.Status == 3)
+                                            {
+                                                <span class="label label-danger">Đã hủy</span>
+                                            }
+                                        </text>),
+                                        grid.Column("InvoiceID", header: "Action", format: @<text>@Html.ActionLink("Chỉnh sửa", "Edit", "Invoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-edit" })</text>)
+                                    )
+                                )
+                            </div>
+
                         </table>
                     </div><!-- /.table-responsive -->
                 </div><!-- /.box-body -->

@@ -12,52 +12,55 @@
 <h3 class="text-success text-bold">@TempData["ErrorMsg"]</h3>
 
 <table class="table table-bordered text-center">
-    <tr>
-        <th>STT</th>
-        <th>Ngày đặt</th>
-        <th>Tổng tiền</th>
-        <th>Trạng thái</th>
-        <th>Hành động</th>
-    </tr>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@(i++)</td>
-            <td>@item.DateInvoice</td>
-            <td>$@item.Total_Bill</td>
-            <td>
-                @if (item.Status == 0)
-                {
-                    <span class="badge bg-primary">Chờ xác nhận</span>
-                }
-                else if (item.Status == 1)
-                {
-                    <span class="badge bg-warning">Đang giao hàng</span>
-                }
-                else if (item.Status == 2)
-                {
-                    <span class="badge bg-success">Đã giao hàng</span>
-                }
-                else if (item.Status == 3)
-                {
-                    <span class="badge bg-danger">Đã hủy</span>
-                }
-            </td>
-            <td>
-                @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
-                {
-                    var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
-                    if (uid == item.FKUserID && item.Status == 0)
-                    {
-                        @Html.ActionLink("Hủy đơn hàng", "Cancel", "Invoice", new { InvoiceID = item.InvoiceID }, new { @class = "btn btn-danger btn-xs btn-cancel-override" })
-                    }
-                    else
-                    {
-                        @Html.ActionLink("Hủy đơn hàng", "#", new { }, new { @class = "btn btn-xs disabled" })
-                    }
-                }
+    @{
+    var grid = new WebGrid(source: Model);
+}
 
-            </td>
-        </tr>
+@grid.GetHtml(
+    tableStyle: "table",
+    headerStyle: "thead-dark",
+    columns: grid.Columns(
+        grid.Column("",
+            header: "STT",
+            format: @<text>@(grid.Rows.IndexOf(item) + 1)</text>
+        ),
+        grid.Column("DateInvoice", "Ngày đặt"),
+        grid.Column("Total_Bill", "Tổng tiền", format: @<text>$@item.Total_Bill</text>),
+        grid.Column("Status", "Trạng thái", format: @<text>
+            @if (item.Status == 0)
+            {
+                <span class="badge bg-primary">Chờ xác nhận</span>
+            }
+            else if (item.Status == 1)
+            {
+                <span class="badge bg-warning">Đang giao hàng</span>
+            }
+            else if (item.Status == 2)
+            {
+                <span class="badge bg-success">Đã giao hàng</span>
+            }
+            else if (item.Status == 3)
+            {
+                <span class="badge bg-danger">Đã hủy</span>
+            }
+        </text>),
+        grid.Column("Action", format: @<text>
+    @if (HttpContext.Current.Request.Cookies["UserInfo"] != null)
+    {
+        var uid = HttpContext.Current.Request.Cookies["UserInfo"]["idUser"];
+        if (uid == item.FKUserID && item.Status == 0)
+        {
+            <a href="@Url.Action("Cancel", "Invoice", new { InvoiceID = item.InvoiceID })" class="btn btn-danger btn-xs btn-cancel-override" onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')">Hủy đơn hàng</a>
+        }
+        else
+        {
+            <a href="#" class="btn btn-xs disabled">Hủy đơn hàng</a>
+        }
     }
+</text>)
+
+
+    )
+)
+
 </table>
