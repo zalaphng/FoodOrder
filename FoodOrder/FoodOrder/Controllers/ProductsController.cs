@@ -314,12 +314,22 @@ namespace FoodWeb.Controllers
             //return RedirectToAction("EditProduct", "Products");
             return View();
         }
-        public ActionResult ViewProductsAdmin()
+
+        [HttpGet]
+        public ActionResult ViewProductsAdmin(string productName)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
-                List<Products> products = db.Products.ToList<Products>();
+                List<Products> products;
+                if (!string.IsNullOrEmpty(productName))
+                {
+                    products = db.Products.Where(p => p.ProductName.Contains(productName)).ToList();
+                }
+                else
+                {
+                    products = db.Products.ToList();
+                }
                 return View(products);
             }
             else
@@ -334,8 +344,8 @@ namespace FoodWeb.Controllers
                     return RedirectToAction("LoginAdmin", "Admin");
                 }
             }
-
         }
+
 
         public ActionResult addToCart(int? Id)
         {

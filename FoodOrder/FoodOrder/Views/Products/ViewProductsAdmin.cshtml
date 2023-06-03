@@ -8,14 +8,33 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-        <h1>
-            Sản phẩm
-        </h1>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Sản phẩm</h3>
+            </div>
+            <div class="col-md-6">
+                <form class="form-inline pull-left" role="search" action="/Products/ViewProductsAdmin" method="GET">
+                    <div class="form-group">
+                        <label for="name">Search:</label>
+                        <div class="input-group">
+                            <input type="search" class="form-control" placeholder="Nhập tên sản phẩm..." aria-label="Search" name="productName">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
             <li><a href="#">Products</a></li>
             <li class="active">List</li>
         </ol>
+
+
     </section>
     <section class="content">
         <div class="row">

@@ -29,3 +29,9 @@ body {
 .fullwidth {
     width: 100%;
 }
+
+.form-control[type="search"] {
+    font-size: 16px;
+    border-radius: 5px;
+}
+
