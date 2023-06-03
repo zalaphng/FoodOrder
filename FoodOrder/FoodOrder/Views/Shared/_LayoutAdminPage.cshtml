@@ -54,7 +54,7 @@
                 {
                     string email = string.Empty;
                     email = adminInCookie["Email"].ToString();
-                    <span style="font-size: 17px; font-weight: bold; margin-left: 50px; color: #fff;">@email</span>
+                    <span style="display:inline-block; font-size: 17px; font-weight: bold; margin-left: 50px; color: #fff; margin-top: 12px;">@email</span>
                     <a href="@Url.Action("Index","Home")" style="float:right; font-size:18px; font-weight: bold; margin-right: 20px; margin-top: 12px;">Trang chủ</a>
                     <a href="@Url.Action("LogoutAdmin","Admin")" style="float:right; font-size:18px; font-weight: bold; margin-right: 50px; margin-top: 12px;">Đăng xuất</a>
                 }
@@ -84,7 +84,7 @@
 
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li class="header">Hướng dẫn chính</li>
+                    <li class="header">Danh mục xử lý</li>
                     <li class="active treeview">
                         <a href="@Url.Action("Index","Admin")">
                             <i class="fa fa-home"></i> <span>Trang chủ</span>
@@ -99,7 +99,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="/Products/ViewProductsAdmin"><i class="fa fa-circle-o"></i> Danh sách sản phẩm </a></li>
-                            <li><a href="/Products/CreateNewProduct"><i class="fa fa-circle-o"></i> sản phẩm mới </a></li>
+                            <li><a href="/Products/CreateNewProduct"><i class="fa fa-circle-o"></i> Thêm sản phẩm mới </a></li>
                         </ul>
                     </li>
                     <li class="treeview">

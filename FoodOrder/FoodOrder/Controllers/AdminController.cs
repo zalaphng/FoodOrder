@@ -93,19 +93,30 @@ namespace FoodWeb.Controllers
             return RedirectToAction("LoginAdmin");
         }
 
-        public ActionResult ListOfOrders()
+        public ActionResult ListOfOrders(string orderID)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
                 float t = 0;
-                List<Orders> order = db.Orders.ToList<Orders>();
-                foreach (var item in order)
+                List<Orders> orderDetails;
+
+                if (!string.IsNullOrEmpty(orderID))
+                {
+                    orderDetails = db.Orders.Where(od => od.FkInvoiceID == orderID).ToList();
+                }
+                else
+                {
+                    orderDetails = db.Orders.ToList();
+                }
+
+                foreach (var item in orderDetails)
                 {
                     t += item.Order_Bill;
                 }
+
                 TempData["OrderTotal"] = t;
-                return View(order);
+                return View(orderDetails);
             }
             else
             {
@@ -121,20 +132,37 @@ namespace FoodWeb.Controllers
             }
         }
 
-        public ActionResult ListOfInvoices()
+
+        public ActionResult ListOfInvoices(string userName)
         {
             var adminInCookie = Request.Cookies["AdminInfo"];
             if (adminInCookie != null)
             {
                 float t = 0;
-                List<InvoiceModels> invoice = db.InvoiceModels.ToList<InvoiceModels>();
+                List<InvoiceModels> invoice;
+
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Name == userName);
+                    if (user != null)
+                    {
+                        invoice = db.InvoiceModels.Where(i => i.FKUserID == user.userid).ToList();
+                    }
+                    else
+                    {
+                        invoice = new List<InvoiceModels>();
+                    }
+                }
+                else
+                {
+                    invoice = db.InvoiceModels.ToList();
+                }
 
                 foreach (var item in invoice)
                 {
                     t += item.Total_Bill;
-
-
                 }
+
                 TempData["InvoiceTotal"] = t;
                 return View(invoice);
             }
@@ -151,6 +179,7 @@ namespace FoodWeb.Controllers
                 }
             }
         }
+
 
         public ActionResult ListOfUsers()
         {
